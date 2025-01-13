@@ -1,0 +1,418 @@
+1. Get Started with Zeotap CDP
+Welcome to Zeotap CDP, your gateway to a user-friendly Customer Data Platform that
+streamlines data integration, enriches customer profiles, enables precise
+segmentation and facilitates personalised marketing across multiple platforms.
+This document is designed to provide you the crucial initial steps to get started with Zeotap
+CDP and gives you a comprehensive overview of Zeotap's capabilities. It also helps you to
+seamlessly integrate and utilise your data with Zeotap CDP. Whether you are new to datadriven platforms or an experienced user, this document will walk you through the
+prerequisites steps that are essential before setting up your Zeotap CDP account, the
+overall workflow of Zeotap CDP and the best practices to be followed while using Zeotap
+CDP. 
+This section covers the following topics:
+· Introduction
+· Before your Begin (Prerequisites)
+· How Zeotap CDP works
+· Best Practices for using Zeotap CDP
+
+1. Integrate
+The Integrate module within Zeotap CDP streamlines the convergence of diverse data
+origins onto one cohesive platform, delivering a harmonised perspective of customers.
+Comprising Sources and Destinations as integral sub-modules, Integrate facilitates the
+collection, integration, and secure transmission of enriched customer data.
+Sources centralises information from multichannel touchpoints and systems, fueling
+personalised marketing endeavours. whereas, Destinations empowers efficient data
+conveyance to external platforms, such as DSPs and DMPs, for targeted campaigns.
+Get Started with Integrate
+To get started with the Integrate module, follow the step-by-step process outlined:
+Step-by-Step Process
+Step 1 - Source Creation: To get started with Zeotap CDP, begin by creating a new source
+in the Sources module. You must also select a source category and source type that align
+with your specific needs and create the source accordingly. For more information about
+how to create sources for different categories, refer here.
+Step 2 - Source Implementation: Once the source is created, proceed with its
+implementation. Refer to the step-by-step instructions provided in the Implementation
+guide tailored to the chosen Source Type. You can download this document from
+the IMPLEMENTATION DETAILS tab of the source that you created.
+Step 3 - Previewing Data: After implementation, you can examine the data that has
+been received into the system under the PREVIEW DATA tab. Note that once the data
+starts flowing into the system, the status of the source changes to Integrated.
+If no data is ingested, then a message stating “We haven’t received any data yet.
+please check again later and ensure that
+the source is implemented correctly. In case of any issues,
+contact support@zeotap.com” message appears on the screen.
+Step 4 - Catalogue Mapping: This is the stage in which you can standardise the incoming
+data to a single organisational-level catalogue by mapping and applying the required data
+transformations. Ensure that your ingested data such
+as identifiers, traits, consent, events and more are appropriately mapped against the fields
+available in the Zeotap catalogue. This ensures the structuring the data flow efficiently.
+You can map the ingested fields to the Catalogue fields by clicking MAP TO
+CATALOGUE under CATALOGUE MAPPING. For more information about the types of
+data that you can map and for detailed steps of mapping, refer here.
+Step 5 - Create Calculated Attributes: This step allows you to derive user-level insights
+by aggregating your users' isolated actions. You can then use this data to create more
+powerful customer cohorts. 
+As a marketer, you can use calculated attributes to create new attributes for a user by
+aggregating their event data over a specific time period. For example, 90_day_revenue of
+a user, 1_week_page_views to check the engagement of a user, units_purchased by a
+user for a specific category like T-shirts. 
+These calculated attributes are used as segmenting criteria and can then be forwarded to
+different integrations. For example, in a workflow, you can define High Spenders as users
+with 90_day_revenue > €500 or Low Engagement Users by
+putting 1_week_page_views < 5 criteria. For more information about Calculated
+Step 6 - Create your Audience: Upon successfully creating a source and ingesting your
+data into the Zeotap system, the next step involves unifying this data by mapping it to the
+corresponding fields on the Catalogue. Subsequently, you can proceed to create a cohort
+of customers, commonly referred to as Audience as per your use case. This Audience can
+be further refined by applying specific criteria.
+Step 7 - Activation:  Once your Audience is well-defined, you can then activate it on a
+designated Destination. To know more about how to activate the Audience on the
+Destination, refer here
+
+1. Introduction
+In a nutshell, you first create a source within Zeotap CDP to gather your customer data
+(like events from your site or app) processed either in batches or real-time. Channel this
+plethora of data into the Zeotap system in a specific format by mapping your incoming
+fields to Zeotap Catalogue fields. This forms unified profiles of your customers in the
+Zeotap system based on the configured ID Strategy. You can then make use of another
+tool of Zeotap CDP called Segment, to create cohorts of your customers, known as
+Audiences/segments. Finally, link these Audiences/segments to outbound platforms such
+as Facebook, Snapchat, Airship, Batch and so on, to achieve your use case using another
+Zeotap tool named Destinations.
+Use cases
+The following are some of the use cases that can be solved using Zeotap CDP:
+· Unified Customer Profiles: CDP aggregates customer data from various sources to
+create unified profiles, ensuring a comprehensive understanding of individual
+customer behaviours and preferences.
+· Personalised Marketing: CDP enables businesses to deliver personalised marketing
+messages by analysing customer data, enhancing the effectiveness of campaigns
+and increasing customer engagement.
+· Real-time Data Access: CDP provides real-time access to customer data,
+empowering businesses to respond promptly to customer interactions and deliver
+timely and relevant communication.
+· Cross-Channel Coordination: CDP ensures consistent messaging across different
+channels, maintaining a cohesive brand image and improving the overall customer
+experience.
+· Optimised Campaigns: CDP-driven insights refine marketing campaigns, improving
+targeting accuracy and maximizing Return on Investment (ROI) by tailoring
+strategies based on customer behaviour.
+· Customer Retention Strategies: CDP identifies potential churn indicators, allowing
+businesses to implement proactive customer retention strategies and personalised
+engagement to retain valuable customers.
+· Compliance with Data Protection Regulations: CDP centralises customer data
+management, facilitating compliance with data protection regulations by ensuring
+secure and organised handling of customer information.
+· Effective Suppression of Existing Customers: CDP suppresses existing customers
+from marketing campaigns to prevent repeated targeting, reducing marketing
+fatigue, and avoiding unnecessary outreach to those already engaged.
+· Optimising Loyalty Programs: CDP supports loyalty programs by tailoring
+promotions based on individual customer profiles, increasing customer
+engagement, and fostering loyalty through targeted incentives.
+· Preventing Customer Fatigue: CDP analyses customer interaction patterns to detect
+signs of fatigue, enabling businesses to adjust marketing strategies and content to
+maintain customer interest and satisfaction.
+
+1. Discovery
+In the Discovery phase, you can start by defining your use cases and understanding your
+customers' requirements. Prioritise use cases and map out data sources, destinations,
+usage timelines and more. You need to get clarity from your customers on the following
+aspects of using a CDP for their use case. By adhering to the instructions below, ensures a
+fast, hassle-free and successful integration.
+· Get prioritised list of use cases for using Zeotap CDP
+· Get prioritised list of Sources to integrate with Zeotap 
+· Get prioritised list of Destinations to target your customers
+· Gather use cases for Profile API
+· Gather use cases for Calculated Attributes
+· Gather use cases for Journeys
+· Other general requirements
+Get prioritised list of use cases for using Zeotap CDP
+Obtain a prioritised list of use cases that your customers intend to address using Zeotap
+CDP. This helps you to align the integration with their specific needs and objectives. For
+each use case, ensure to map out the Source, Destination and establish clear timelines for
+when they plan to employ them. This level of detail ensures that the integration is precisely
+tailored to their requirements. For information about some of the real-time use cases that
+we have solved through Zeotap CDP, refer here.
+Get prioritised list of Sources to integrate with Zeotap CDP
+Obtain the prioritised list of Sources, which you wish to integrate with Zeotap CDP for
+transferring your customer data. In addition, ensure that you have the following details
+readily available regarding the Source Integration:
+· Data model - Ensure that you have clearly defined the fields that you wish to send to
+Zeotap through source integration. 
+· Onboarding Format - Specify the preferred method for onboarding, such as Flat file,
+API, Data warehouse, SDK, or other applicable formats.
+· Managing Deltas - Verify that customers adhere to the practice of sending only delta
+updates, especially when utilizing Flat Files or establishing configurations within DB
+tables. This ensures the efficient and incremental transfer of data, minimising
+redundancy.
+Get prioritised list of Destinations to target your customers
+Obtain the prioritised list of Destinations to concentrate your marketing efforts on targeting
+specific customer cohorts. In addition, ensure that you have the following details readily
+available regarding the Destination Integration:
+· Credentials of the Platforms - Secure the necessary credentials for the identified
+Platforms. To understand the difference between Platforms and Destinations, refer
+here.
+· Use Cases to be Activated - Be clear about the use cases to be activated on the
+Destinations. For example, suppression, creating look-a-likes in the platforms and
+more.
+· Preferred Output Data Fields - Define the preferred output identifiers for each
+platform. For example, for Facebook - emails, MAIDs, or both; for Braze - First
+name, Last name, email, Braze ID and so on.
+Gather use cases for Profile API
+You can use our Profile API to read, write and delete the user profiles from the Zeotap
+system. Ensure that you have the following details readily available for for effective use of
+our Profile API: 
+· Identify Data for Profile API - Specify the data intended for utilisation through the
+Profile API, such as segment membership or other profile attributes. Note that
+event data is not supported through Profile API.
+· Delete API Caller - Clearly define the caller of the Delete API and the responsible
+system or individual for the Delete API operation.
+Gather use cases for Calculated Attributes
+For Calculate Attributes, identify the use case and possible conditions that you want to
+achieve.
+· For example, create a lead score for routing the leads to specific sales
+representatives.
+· For example, to show a welcome back banner to people who did not login in the last
+7 days, pre-create a Calculated Attribute counting last_7_days_login.
+· To target a customer when they are viewing a product they have been most
+engaged with, pre-create a Calculated Attribute tracking most_viewed_product in
+the last 3 days.
+Gather use cases for Journeys
+For you to be able to use Journeys and create workflows, ensure the following:
+· You have a real-time streaming source created in Sources.
+· You have mapped the streaming source in your Catalogue.
+Other general requirements
+Below are the general requirements that can be considered during Discovery:
+· Collect your precise Country/Region requirements.
+· Inform that default support for the EU is available; approval is required in the
+contract for other regions in terms of Data Residency.
+
+1. Data or Catalogue Definition
+In this stage, you need to define the incoming fields and map it to the respective Zeotap
+Catalogue field, specify the sensitivity of the data, define consent and more.
+· Develop a schema document with transformation requirements
+· Define the data model
+· Define the sensitivity of the data
+· Establish Time-To-Live strategy
+· Define the granular consent fields
+· Provide sample files for testing
+· Finalise the Enrichers to use
+Develop a schema document with transformation requirements
+Ensure that you develop a schema document for each source, along with the following
+details:
+A schema document is a structured document that outlines the format, structure, and
+specifications of data within a dataset. In the context of your requirement, it serves as a
+comprehensive guide for handling data transformation needs.
+· Confirm the presence of at least one ID, Consent and Country field.
+· Explicitly map incoming fields to the corresponding Zeotap Catalogue field in the
+schema document.
+· Specify consent details, considering the customer's desired consent type,
+applicable channels and the creation of custom consent fields if the source lacks an
+explicit consent field.
+· When no specific consent field exists, consider the entire dataset as consented for
+all purposes.
+Define the data model
+Define the consolidated data model obtained during the discovery stage, covering event,
+profile and other custom attributes.
+Define the sensitivity of the data
+Specify the sensitivity of data, including Personally Identifiable Information (PII) and other
+sensitive data. PII and sensitive data are masked within the product and Special
+Personally Identifiable Information (SPII) data must be classified as PII data.
+Establish Time-to-Live (TTL) strategy
+Establish the Time-to-Live (TTL) strategy for both persistent and non-persistent IDs.
+Time-to-Live (TTL) is a strategy that defines the lifespan or expiration period of data within
+a system. It specifies the duration for which data, particularly identifiers (IDs), remains
+valid and accessible. The TTL strategy is crucial for managing data freshness, security,
+and compliance with privacy regulations.
+Persistent IDs typically have a longer TTL, often set to "Forever." These identifiers, like
+customer-specific IDs, are meant to persist indefinitely.
+Non-persistent IDs, on the other hand, have a defined TTL after which they expire. This
+duration is determined by the TTL strategy and ensures that outdated or irrelevant data is
+not retained unnecessarily.
+Define the granular consent fields
+Define the Granular Consent fields for each source along with the following details:
+· Identify the attributes denoting consent.
+· Determine the customer's desired consent type.
+· Define the applicable channels for consent. In cases where the source lacks an
+explicit consent field, establish a custom consent field and generate a hardcoded or
+derived enricher. If no specific consent field exists, the platform considers the
+complete data as consented for all purposes.
+Provide sample files
+Provide sample files to Zeotap for testing purposes, adhering to best practices and
+recommendations for various source types.
+Finalise the Enrichers to use
+Gather a list of required enrichers, such as Date-Time and Currency Transformations. For
+an exhaustive list of available enricher types within the system, refer https://docs.zeotap.com/articles/unify-customer/enrichers.
+
+1. Set up ID Strategy
+Ensure that you prepare the source-specific data dictionary (listing attributes from each
+source) and a data model (illustrating the relationships between each source and their
+respective identifiers) before proceeding with the configuration of the ID strategy.
+We recommend you to develop an ID Catalogue document to define relationships between
+identifiers for the ID strategy configuration, including all relevant identifiers within your
+account's catalogue. Once the ID strategy configuration is finalised, document the
+corresponding data scenarios and replicate them in the Zeotap CDP interface. Following
+that, you can set up your ID configuration. For more information about how to configure the
+ID strategy for your account, refer https://docs.zeotap.com/smart/project-unify/configure-the-id-strategy.
+Data or Catalogue Definition
+← Previous Page
+How Zeotap CDP Works
+Next Page →
+Need support?
+Questions? Problems? Need more info? Contact us, and we can help!
+Raise a ticket
+By default, we enable the Identify and link using all IDs option, which takes into
+account all the ID attributes across sources for resolving or creating user profiles.
+Note that this is an irreversible process. Any changes done after source creation
+are only applicable to the new data that is ingested.
+Once the data mapping is complete, the customer profiles are created and unified
+as per the ID strategy active in the account.
+
+
+Create a Source
+To get started with Zeotap CDP, begin by creating a new source to bring Data to Zeotap CDP. You must also select a source category that align with your specific needs and create the source accordingly.
+
+The following are the various source categories supported in Zeotap CDP:
+Website Events: To send data from your websites to Zeotap CDP, The following are the two commonly used methods/files to implement website event tracking:
+Web JS, This is a client-side library that can be implemented on websites to track events, page visit information, user logins, user details and any other information relating to the product or services offered on the website. For more information about WebJS source, refer here.
+Pixel files, also known as tracking pixels or web beacons, are small, invisible elements embedded within web pages to collect information about user behaviour and interactions. For more information about Pixel files, refer here.
+App Events: To collect customer data in mobile applications, we integrate our native Android and iOS SDKs (Software Development Kits). These SDKs track user interactions and capture events within the app. The following are the two native SDKs available in the system:
+Android SDK, This is designed to support all Android devices and tablets, including Amazon Fire TV. The SDK simplifies the process of sending data to any tool without having to implement a new API every time. For more information about Android SDK, refer here.
+iOS SDK, This supports all iOS devices and tablets. The SDK simplifies the process of sending the data from your iOS app to Zeotap. For more information about iOS SDK, refer here.
+Flat Files: To store data collected from external sources, often in formats like CSV or JSON, which can be directly uploaded from the Sources user interface or through other methods like the GCloud Console, GS Utils, or through third-party tools like Cyberduck. The following are the two ways for transferring batch data using Flat Files:
+Zeotap Google Cloud Storage, Zeotap supports importing of data collected from other sources or stored outside Collect onto the platform. This data can be in the form of CSV or JSON files. For more information about Zeotap Google Cloud Storage, refer here.
+SFTP (Secure File Transfer Protocol), Sources supports importing of data collected from other sources or stored outside Sources onto the platform. As an organisation, you can use the SFTP source to onboard your data to Zeotap’s SFTP server using one of the different modes of connection that we recommend. For more information about Zeotap SFTP Sources, refer here.
+Server to Server: Sources can be registered for server-to-server data transfer under the HTTP API source. The Source details contain the API endpoint and the write_key to be used for sending the data.
+Tag Managers: Provides a user-friendly interface that allows marketers and website administrators to add, update, and manage tracking codes without the need for direct involvement from developers or frequent code changes on the website.The following are the two popular tag managers that Zeotap offers:
+Adobe Experience Platform Tag Extension, Zeotap provides the Zeotap Collect Tag Extension within the Adobe Experience Platform marketplace to capture events and user identities and enable cookie syncing on the Web. For more information about Adobe Experience Platform Tag Extension, refer here.
+Google Tag Manager, The Zeotap Collect Tag is available as a custom template on Google Tag Manager for easy integration. This is a JavaScript tag that captures events and user information as the customers navigate your websites. For more information about Google Tag Manager, refer here.
+CRM Data: refers to the comprehensive set of information about customers and their interactions with a business that is stored and managed within the CRM platform. The following are the CRM Data Source integrations that Zeotap offers:
+Salesforce CRM,The Sources module supports importing data from the Salesforce CRM. Salesforce CRM stores data as standard objects that are like tables. For more information about Salesforce CRM, refer here.
+Data Warehouse: A Data Warehouse is a centralised and integrated repository that stores large volumes of structured and unstructured data from various sources.The following are the Data Warehouses integration that Zeotap offers:
+Snowflake, Zeotap brings simplicity to your data onboarding process by letting you connect directly to your source data residing in Snowflake through Sources. For more information about Snowflake, refer here.
+BigQuery, Zeotap simplifies your data onboarding process by letting you connect directly to your source data residing in BigQuery through Sources. For more information about BigQuery, refer here.
+Amazon S3, Zeotap brings simplicity to your data onboarding process by letting you connect directly to your source data residing in Amazon (AWS) S3 through the Sources module of Zeotap CDP. Note that you can configure auto-sync of data between your S3 account and the source created in Zeotap CDP by using the Sync Frequency feature. For more information about BigQuery, refer here. 
+Customer Engagement Channels: These are powerful tools that enable businesses to interact with customers across multiple touchpoints, deliver personalised experiences, and collect valuable data on customer preferences, behaviours, and responses. The following are the Customer Engagement Channels Source Integrations that Zeotap offers:
+Braze Currents
+Batch
+Dotdigital
+HubSpot Source
+Airship Batch
+Airship Real-Time Data Streaming
+Cleverpush (Batch) Source
+Cleverpush (Real-Time) Source
+Message Queue: A message queue is like a buffer that receives messages in a specific order and forwards them to the concerned sub-system or application in the same order. Message queues decouple the sender and recipient, allowing them to operate independently and at their own pace. Consumers retrieve messages from the queue when they are ready to process them. They can retrieve and process messages independently and at their own pace, allowing for asynchronous processing.The following are the message Queue integration that Zeotap offers:
+Pub/Sub Stream, Pub/Sub (Publish/Subscribe) Stream is a messaging pattern that allows different applications and services to communicate with each other in real-time. In a Pub/Sub system, messages are published to a central exchange (or “topic”) and subscribed to by various recipients. The recipients receive notifications or data as soon as new messages are published, which makes it an efficient and scalable way to exchange information in real-time. For more information about Pub/Sub Stream, refer here.
+Pub/Sub Batch, Pub/Sub (Publish/Subscribe) Batch upload is a way to efficiently and reliably send multiple messages to Pub/Sub topics in a single request. This feature allows you to save network requests and improve the performance and scalability of your applications. In Pub/Sub Batch upload, you create a batch file containing all the messages you want to send. The batch file can be read as often as necessary, but once it is exhausted, only new messages are sent. Pub/Sub Batch upload is useful for processing large numbers of messages at once in real-time applications, as well as in back-end processes that process data over time. For more information about Pub/Sub Batch, refer here.
+Implement the Source
+Once the source is created, proceed with its implementation. Refer to the step-by-step instructions provided in the Implementation guide tailored to the chosen Source Type. You can download this document from the IMPLEMENTATION DETAILS tab of the source that you created.
+To implement a Web JS Source, refer here.
+To implement a Pixel Source, refer here.
+To implement Pixels on a Site, Ad or Campaign, refer here.
+To implement Android SDK Source, refer here.
+To implement iOS SDK Source, refer here.
+To implement a react native package, refer here.
+To implement Zeotap Google Cloud Storage Source, refer here.
+To implement SFTP(Push) Source, refer here.
+To implement SFTP(Pull) Source, refer here.
+To implement Server to Server Source, refer here.
+To implement Adobe Experience Platform Tag Extension Source, refer here.
+To implement Google Tag Manager Source, refer here.
+To implement BigQuery Source, refer here.
+To implement Snowflake Source, refer here.
+To implement Amazon S3 Source, refer here.
+To implement Batch Source, refer here.
+To implement Braze Currents Source, refer here.
+To implement Dotdigital Source, refer here.
+To implement HubSpot Source, refer here.
+To implement Airship (Batch) Source, refer here.
+To implement Airship (Real-time) Source, refer here.
+To implement Cleverpush (Batch) Source, refer here.
+To implement Cleverpush (Real-time) Source, refer here.
+
+Preview Data
+After successfully implementing the source, you can examine the data that has been received into the system under the PREVIEW DATA tab. Note that once the data starts flowing into the system, the status of the source changes to Integrated.
+Information	If no data is ingested, then a message stating “We haven’t received any data yet. please check again later and ensure that the
+source is implemented correctly. In case of any issues, contact support@zeotap.com” message appears on the screen.
+
+Map the Catalogue
+This is the stage in which you can standardise the incoming data to a single organisational-level catalogue by mapping and applying the required data transformations. Ensure that your ingested data such as identifiers, traits, consent, events and more are appropriately mapped against the fields available in the Zeotap Catalogue. This ensures the structuring the data flow efficiently. Map the ingested fields to the Catalogue fields by clicking Map to Catalogue under either the CATALOGUE MAPPING or PREVIEW DATA tab.
+The following are the important steps that you need to know while performing the Catalogue Mapping:
+
+
+Mapping Customer and Non-Customer Entity Data: You can map both Customer Data and Non-Customer Entity Data in the Catalogue. For more information about the how to map the Catalogue for Customer data and Non-Customer Entity Data, refer here.
+Knowing Zeotap Standard Fields – Zeotap provides a set of standard fields in your catalogue. If you do not find these standard fields in your organisation’s catalogue, you can create custom fields. The process of creating the custom fields happens in an interactive interface wherein you can define your data points, bring them into Zeotap and manage them independently. Using this interface, you can easily edit the existing catalogue field or create a new field. For more information about the standard fields, refer to the relevant below links.
+Zeotap Standard Fields
+Reserved Catalogue Fields
+Add a Catalogue field – While adding a new Catalogue field, search for the desired field you wish to add. If the field is already present in the system, you are prompted to use the existing field and can access the details page. However, if the field does not exist in the system, you have to create a new field as explained in the Add a Catalogue field topic.
+Configure Enrichers – After adding the fields, you have to configure the required Enrichers. Enrichers are quick functions available for you to perform data transformations. Zeotap enrichers can be broadly classified as Data Transformation Enrichers and Custom Enrichers.
+Map the Consent Purposes - Once you have mapped all the Identifiers, on the same screen, click + ADD MAPPING. If a source has consent data, then select the incoming consent field and map it to the relevant Zeotap consent field. For more information about mapping the consent purposes, refer here.
+Map the Marketing Preferences - Capture marketing preferences along with consent to add clarity and assurance to the marketing team while designing the campaign for the right audience. For more information about mapping the Marketing Preferences, refer here.
+Review Mapping – In the REVIEW MAPPING screen that appears, you can find warnings along with error logs that provide a description of the issue for incorrectly mapped fields. Once you have corrected these fields, the system automatically refreshes, allowing the warning to disappear. For more information about reviewing the mapping, refer here.
+Save Mapping – When you have reviewed all the fields, click CONFIRM AND SAVE.
+Information
+Once the mapping is successfully done, then the source transitions to Mapped state.
+
+Create Calculated Attributes
+This step allows you to derive user-level insights by aggregating your users' isolated actions. You can then use this data to create more powerful customer cohorts. As a marketer, you can use calculated attributes to create new attributes for a user by aggregating their event data over a specific time period. For example, 90_day_revenue of a user, 1_week_page_views to check the engagement of a user, units_purchased by a user for a specific category like T-shirts. These calculated attributes are used as segmenting criteria and can then be forwarded to different integrations. For example, in a workflow, you can define High Spenders as users with 90_day_revenue > €500 or Low Engagement Users by putting 1_week_page_views < 5 criteria. For more information about Calculated Attributes, refer here.
+
+Create Audience
+The following are the steps involved in creation of Audiences in Zeotap CDP:
+Create Audience: Upon successfully creating a source and ingesting your data into the Zeotap system, the next step involves unifying this data by mapping it to the corresponding fields on the Catalogue. Subsequently, you can proceed to create a cohort of customers, commonly referred to as Audience as per your use case.
+Define Criteria for Your Audience: Further, define the criteria for the created Audience to qualify customers (unified profiles). You can leverage the available attribute types to define your Audience and create the optimal marketing strategy for them. The attribute types include attributes such as Events, Profile attributes, Calculated attributes, Consent, Marketing preferences and more. To know more about attributes and how to apply them to your Audience, refer here.
+
+Activate Audience on Destinations
+Activation is the process of linking the cohort of customers to various advertising platforms, such as Facebook, Adform, Twitter and more. This allows you to implement focused marketing strategies that align with the criteria established for the target cohort.
+After defining the audience, you can activate it on a Destination either immediately or you can choose to activate it later. You can revisit this Audience later for further modifications.
+To activate the Destination immediately, after defining the criteria for your Audience, on the last screen of the Audience creation, click Activate Now.
+This takes you to a new screen, where you can either choose to enable A/B testing on the Audience or activate the created audience by linking it to a specific Destination as shown in the image below.
+Set A/B Test – This functionality is exclusively available for users who have opted for it. Selecting this option takes you to a screen where you can split the audience into two or more variations. For more information about AB testing and its application, refer here.
+Link to Destination – This functionality helps you to activate the created Audience by linking to a Destination. For step-by-step instructions on how to activate an Audience, refer here.
+
+Validating Data before Onboarding
+The following are the best practices for validating data before onboarding:
+All sources need to share the sample files to validate the data coming in with the data discovery sheet.
+All data should be first uploaded into the sandbox environment and tested, before onboarding onto the Production environment. All clients are given one Sandbox environment. 
+
+Setting Up Organisation and User
+The following are the best practices for setting up Organisations and Users within Zeotap CDP:
+
+Data Residency: All data will reside in the European Union (EU) region unless the customer specifically asks for a different region, which needs to be notified before hand.  
+If all the data must be unified, then ensure to onboard them onto the same organisation. 
+In case of child organisations, data will not be unified across them. This is ideal when:
+Data is kept separate across countries or brands.
+Consent is specific to a particular brand or source.
+User Access Management: Make sure to complete the tree mapping of admin and other roles in the client side.
+
+Setting Up Sources
+The following are the best practices and recommendations that must be considered when using Sources:
+For information on best practices to be followed while setting up different sources, refer here.
+Verify the sample data provided by the customer for nested or complex structures. Presently, this data type is not supported. If ingestion is necessary, the customer must flatten the data on their end.
+For Server to Server aka HTTP API sources, the data formats may need to be transformed. 
+Consider the Events vs Profiles vs other attribute types carefully when defining custom fields based on the customer's use-case and specified data type. For information on Catalogue fields, refer here.
+For Deltas, you must only share the updated data to ensure optimal use of processing allowance.
+
+Setting Up Predictive Audience
+The following are the best practices and recommendations for setting up Predictive Audience:
+Ensure that data for the relevant events is added and accurately mapped.
+To run the RFM and CLV models, ensure that the you have mapped Event Name and Event > Timestamp and Event > eCommerce > Price, Order Value or Cart Value in Zeotap Catalogue Field.
+The customer should have access to over 10K events for the specific event on which they intend to initiate model creation. For more information about Predictive Audiences, refer here.
+
+Setting Up Journeys
+The following are the best practices and recommendations for setting up workflows within Journeys:
+Ensure accurate mapping of all required data fields under the correct source for creating workflows. Only the mapped fields will be accessible for filtering during workflow creation. 
+At least one streaming source must be mapped, and it is mandatory for the event_name to be present on the source mapping.
+Make sure to pre-create the Calculated Attributes needed for the workflows.
+While setting up a Destination, verify that you've entered the correct connection details for the designated channel and are sending all the mandatory fields required for that channel.
+Verify accurate data mapping between Zeotap CDP and the Channel.
+
+Setting Up Consent Orchestration
+All the consent and marketing preference attribute should be mapped to relevant consent and marketing preference attributes in the Zeotap catalogue to ensure visibility in Consent Orchestration rules. For more information on Consent Orchestration, refer https://docs.zeotap.com/articles/protect-customer/consent-orchestration-2830401643.
+
+Setting Up Profile API
+Below are the best-practices that you need to adhere while setting up Profile API.
+As per the Profile API use cases defined in the Discovery Phase, each use case or system must have a separate API key to ensure traceability.
+You should invoke the Profile API once per session, only. As the response is unlikely to change, even if the API is called multiple times, you can cache the response locally for subsequent use within the session. However, note that calling the API multiple times is still counted against your usage metrics.
+To avoid unnecessary count against your usage metrics,  you can add a check to prevent calling the Profile API when there is no ID to look up.
+You can use a separate API token for each interface. This ensures that each interface is uniquely identified and managed separately. Using separate API tokens also enhances the security of your system by limiting access to individual interfaces when one token is compromised.
+For user lookups, you can use one of the immutable IDs or primary IDs that you have selected for ID resolution. This ensures that the user is identified uniquely and the lookup is consistent across the different systems.
+To ensure security, we do not recommend you implement Profile API on a web interface. Instead, you can implement the API remotely using a service layer. This approach minimises the risk of unauthorised access and other security vulnerabilities that may arise when implementing the API on a web interface.
+To call a specific attribute of a user, you can use the Fetch node. This allows you to retrieve only the required attribute instead of calling all user attributes on the client side.
