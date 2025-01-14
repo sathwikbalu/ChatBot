@@ -10,6 +10,8 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 
 import os
 
+# Know more about RAG technology in 00-simple-local-rag.ipynb
+
 # Configure Google Generative AI
 GOOGLE_API_KEY = 'AIzaSyBWG53DzCscQUFgUhYp1Nufa3tw9NfsfmA'
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -21,6 +23,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Path to the folder containing the .txt files
+# Ddata of 4 different documentations in different text files 
 folder_path = "./data"
 
 # Use DirectoryLoader with a custom TextLoader specifying the encoding

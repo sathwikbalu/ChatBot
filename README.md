@@ -97,6 +97,15 @@ project-root/
 3. Navigate to the `frontend` directory and start the React development server with `npm run dev`.
 4. Interact with the chatbot via the React frontend or by sending POST requests to `http://localhost:7000/chat` with a `message` in the body.
 
+## Data Sources
+
+The following official documentation is used to retrieve information:
+
+- **Segment Documentation**: [Segment Docs](https://segment.com/docs/?ref=nav)
+- **mParticle Documentation**: [mParticle Docs](https://docs.mparticle.com/)
+- **Lytics Documentation**: [Lytics Docs](https://docs.lytics.com/)
+- **Zeotap Documentation**: [Zeotap Docs](https://docs.zeotap.com/home/en-us/)
+
 ## Notes
 
 - Ensure your Google Generative AI API key has sufficient permissions.
