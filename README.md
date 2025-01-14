@@ -57,6 +57,7 @@ This project is a Flask-based chatbot application that utilizes LangChain, Googl
 
    ```bash
    cd frontend
+   npm install
    npm run dev
    ```
 
