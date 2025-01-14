@@ -1,0 +1,1117 @@
+What is Segment?
+With Segment, you can collect, transform, send, and archive your first-party customer data. Segment simplifies the process of collecting data and connecting new tools, allowing you to spend more time using your data, and less time trying to collect it. You can use Segment to track events that happen when a user interacts with the interfaces. “Interfaces” is Segment’s generic word for any digital properties you own: your website, mobile apps, and processes that run on a server or OTT device.
+When you capture interaction data in Segment, you can send it (often in real-time) to your marketing, product, and analytics tools, as well as to data warehouses. In most cases, you won’t even need to touch your tracking code to connect to new tools.
+
+How Segment Works
+In a nutshell, the Segment libraries (Sources) generate messages about what’s happening in your site or app, and send them to the Segment servers. Segment then translates the content of those messages into different formats for use by other tools (which Segment calls Destinations), and sends the translated messages to those tools. The Segment servers also archive a copy of the data, and can send data to your storage systems (such as databases, warehouses, or bulk-storage buckets).
+Segment Spec methods are how you collect interaction data from your interfaces, and the Sources are what you package with your interfaces to collect and route the data.Sources for collecting data
+You can collect data by implementing Segment’s tracking libraries as your Sources:
+
+Analytics.js, the Segment JavaScript source, is the most powerful way to track customer data from a website. Segment recommends it as the default installation for any website.
+The Segment Mobile SDKs are the best way to simplify tracking in your iOS, Android, and Xamarin apps. Segment recommends them over server-side sources as the default installation for any mobile app.
+Server-side sources let you send analytics data directly from your servers when client-side tracking doesn’t work, or when you’re sending mission-critical data like revenues.
+Sources for unique cases
+Segment also offers these other source libraries to cover less straightforward cases:
+
+Use the HTTP Tracking API if Segment doesn’t offer a library for your specific environment yet.
+The Pixel Tracking API lets you track events from environments where you can’t execute code - for example, tracking when an email was opened.
+The Querystring API lets you use querystrings to load API methods when a user first visits a Segment-enabled site. Use this API for tracking events like email clicks and identifying users associated with those clicks on the destination page.
+Cloud App Sources
+Segment also offers Cloud App Sources to integrate data from your third-party tools:
+Object Cloud Sources can import third party tool data directly into your Segment warehouse, but can’t stream that data into your other Segment destinations. Make sure you enable a Segment warehouse before you enable an object cloud source.
+Event Cloud Sources don’t just import third party tool data into your Segment warehouse, they also send event data in real-time to your other Segment destinations. You don’t need to set up a data warehouse to send Event Cloud Source data to your destinations.
+How you can track data
+Segment supports several ways to implement tracking. The two most common are to use device-based or server-based libraries. You can use Segment’s device-based libraries, such as JavaScript, iOS, and Android, to make calls on users’ browsers or mobile devices. You can also track data with Segment’s server-based libraries, such as Node, Python, or PHP, where the calls are triggered on your own servers and then sent to the Segment servers.
+When you collect data using device-based libraries, you can choose between these two different connection modes:
+Cloud-mode is where the library sends the data directly to the Segment servers which then translate and forward it.
+Device-mode is where the library sends the data both directly to the Segment servers, and also to the servers for the destination tool. Device-mode sometimes requires some additional set-up steps, but can unlock rich device data.
+Although there are some tradeoffs between the two approaches, neither is better than the other, and Segment recommends that you implement a mix of both. In general, more direct interaction data is available using a device-based library, but server-based collection is more secure, reliable, and can’t be blocked by ad blockers.
+
+The Segment Methods
+The Segment libraries generate messages about what happens on your interface, translate those messages into different formats for use by destinations, and transmit the messages to those tools.
+There are several tracking API methods, that you can call to generate messages. The four most important methods are:
+Identify: Who is the user?
+Page and Screen: What web page or app screen are they on?
+Track: What are they doing?
+Every call shares the same common fields. When you use these methods as intended, it allows Segment to detect a specific type of data and correctly translate it to send it on to downstream destinations.
+Where you can send data
+Segment maintains a catalog of destinations where you can send your data.
+Once you’ve collected your interaction data, there are several different actions you can take:
+Send it to Destinations, which receive the data from any number of sources in real time
+Send it to Warehouses and other bulk storage tools, which hold your raw event schemas and update on regular intervals
+Enrich the customer data you collect by connecting data from your other tools, and then collect it in a warehouse to monitor performance, inform decision-making processes, and create uniquely customized user experiences.
+Use Engage, Twilio’s marketing automation tool, to build marketing campaigns personalized to your audience.
+
+A Basic Segment Installation
+When you implement Segment, you add Segment code to your website, app, or server. This code generates messages based on specific triggers you define.
+In a basic implementation, the code can be a snippet of JavaScript that you copy and paste into the HTML of a website to track page views. It can also be as complex as Segment calls embedded in a React mobile app to send messages when the app is opened or closed, when the user performs different actions, or when time based conditions are met (for example “ticket reservation expired” or “cart abandoned after 2 hours”).
+The best way to learn about how Segment works is to see it in action. This tutorial walks you through an installation using one of Segment’s libraries: JavaScript, PHP, or the iOS library.
+Before you begin
+Before you start your Segment implementation, you need:
+A Segment user account and a workspace. If you’re not already part of an organization with a Segment Workspace, you can sign up for a free account and workspace.
+Access to the code for a basic website, PHP website, or an iOS app.
+Tip! If you don’t have any of those things, consider creating a simple GitHub Pages website.
+Create separate dev and prod sources
+When you develop and test sources, Segment recommends you to create and use separate sources for each of your environments (production, development, staging) to prevent testing and development activities from filling production systems with invalid data.
+You can give each source an environment label when you create it, and Segment strongly suggests that you use these labels to sort your sources. When you create a source during the steps below, make sure you enter an environment label.
+Double-check when you enter write keys for dev and production environments to make sure that you send the right data to the right place.
+Create a Segment source
+To create a Segment source:
+Go to your Segment workspace, and navigate to the Sources catalog.
+Select your source. You can choose from either the Javascript source, the PHP source, or the iOS source.
+Click Add Source.
+Enter a name for the source. Segment recommends that you include the word demo, test, or quickstart in the name so you can easily find and delete this source later.
+(Optional) Add an Environment label of dev to the source in the Labels field. Segment recommends you do this so that you know this demo source isn’t part of a production installation.
+(Optional) Add the website URL. Segment provides this field so that you can flag the website being tracked to the source. Segment does not use this URL anywhere else.
+Find your write key
+The write key is a unique identifier for a source that tells Segment which source the data comes from, to which workspace the data belongs, and which destinations should receive the data.
+To find your write key:
+Go to Connections > Sources and select your source.
+Click the Settings tab for the source and click API Keys.
+Make note of or write down your write key, as you’ll need it in the next steps.
+Any time you change a library’s settings in the Segment App, the write key regenerates.
+Screenshot of a source's settings page, with the API Keys tab selected.
+Cloud-sources do not have write keys, as they use a token or key from your account with that service. Cloud-sources have other considerations and aren’t part of this tutorial.
+Installing Segment
+Click a tab below to see the tutorial content for the specific library you chose.
+Javascript quickstart
+iOS Mobile quickstart
+PHP quickstart
+Step 1: Copy the Snippet
+Navigate Connections > Sources > JavaScript in the Segment app and copy the snippet from the JavaScript Source overview page and paste it into the <head> tag of your site.
+That snippet loads Analytics.js onto the page asynchronously, so it won’t affect your page load speed. Once the snippet runs on your site, you can turn on destinations from the destinations page in your workspace and data starts loading on your site automatically.
+Note: If you only want the most basic Google Analytics setup you can stop reading right now. You’re done! Just toggle on Google Analytics from the Segment App.
+The Segment snippet version history available on GitHub. Segment recommends that you use the latest snippet version whenever possible.
+Step 2: Identify Users
+The identify method is how you tell Segment who the current user is. It includes a unique User ID and any optional traits you know about them. You can read more about it in the identify method reference.
+Note: You don’t need to call identify for anonymous visitors to your site. Segment automatically assigns them an anonymousId, so just calling page and track works just fine without identify.
+Here’s an example of what a basic call to identify might look like:
+analytics.identify('f4ca124298', {
+  name: 'Michael Brown',
+  email: 'mbrown@example.com'
+});
+This identifies Michael by his unique User ID (in this case, f4ca124298, which is what you know him by in your database) and labels him with name and email traits. When you put that code on your site, you need to replace those hard-coded trait values with the variables that represent the details of the currently logged-in user.
+To do that, Segment recommends that you use a backend template to inject an identify call into the footer of every page of your site where the user is logged in. That way, no matter what page the user first lands on, they will always be identified. You don’t need to call identify if your unique identifier (userId) is not known.
+Depending on your templating language, your actual identify call might look something like this:
+analytics.identify(' {{user.id}} ', {
+  name: '{{user.fullname}}',
+  email: '{{user.email}}'
+});
+With that call in your page footer, you successfully identify every user that visits your site.
+Note: If you only want to use a basic CRM set up, you can stop here. Just enable Salesforce, Intercom, or any other CRM system from your Segment workspace, and Segment starts sending all of your user data to it.
+Step 3: Track Actions
+The track method is how you tell Segment about the actions your users are performing on your site. Every action triggers what Segment calls an “event”, which can also have associated properties. You can read more about track in the track method reference.
+Here’s an example of what a call to track might look like when a user signs up:
+analytics.track('Signed Up', {
+  plan: 'Enterprise'
+});
+This example shows that your user triggered the Signed Up event and chose your hypothetical 'Enterprise' plan.
+Properties can be anything you want to record, for example:
+analytics.track('Article Bookmarked', {
+  title: 'Snow Fall',
+  subtitle: 'The Avalanche at Tunnel Creek',
+  author: 'John Branch'
+});
+If you’re just getting started, some of the events you should track are events that indicate the success of your site, like Signed Up, Item Purchased or Article Bookmarked. Segment recommends that you track a few important events as you can always add more later.
+Once you add a few track calls, you’re done with setting up Segment. You successfully installed Analytics.js tracking. Now you’re ready to turn on any destination you like from the Segment App.
+Test that it’s working
+Once you’ve set up your Segment library, and instrumented at least one call, you can look at the Debugger tab for the Source to check that it produces data as you expected.
+The Source Debugger is a real-time tool that helps you confirm that API calls made from your website, mobile app, or servers arrive at your Segment Source, so you can quickly see how calls are received by your Segment source, so you can troubleshoot quickly without having to wait for data processing.
+Screenshot of a source's Debugger, with a Track call selected and the Pretty view for a sample event.
+The Debugger is separate from your workspace’s data pipeline, and is not an exhaustive view of all the events ever sent to your Segment workspace. The Debugger only shows a sample of the events that the Source receives in real time, with a cap of 500 events. The Debugger is a great way to test specific parts of your implementation to validate that events are being fired successfully and arriving to your Source.
+Tip: To see a more complete view of all your events, you might consider setting up either a warehouse or an S3 destination.
+The Debugger shows a live stream of sampled events arriving at the Source, but you can also toggle from “Live” to “Pause” to stop the stream and prevent it from displaying new events. Events continue to arrive to your Source while you Pause the stream, they just are not displayed.
+You can search on any information you know is available in an event payload to search in the Debugger and show only matching payloads. You can also use advanced search options to limit the results to a specific event.
+Screenshot of the Event Debugger Advanced settings.
+Two views are available when viewing a payload:
+The Pretty view is a recreation of the API call you made that was sent to Segment.
+The Raw view is the complete JSON object Segment received from the calls you sent. These calls include all the details about what is being tracked: timestamps, properties, traits, ids, and contextual information Segment automatically collects the moment the data is sent.
+Set up your first destination
+Once you’re satisfied that data is arriving from your new source, it’s time to set up your first destination! As long as you have page or screen data coming from the source, you can quickly enable Google Analytics to look at the page view statistics.
+If you don’t have a Google Analytics account, you can either set up a free account, or look at the Destination Catalog for a different destination to enable.
+You’ll need a tracking ID for Google Analytics (either a “website” or “serverside” tracking ID), or another API key if you’re substituting another destination. Make a note of this ID or key as you’ll need it to connect your destination.
+To set up your first destination:
+Go to your Segment workspace, click Destinations, and click Add Destination to go to the Catalog.
+Search for the destination you want to add. In this case, search for Google Analytics.
+Click the tile for the destination to see information about it.
+Click Configure Google Analytics.
+Select the source that you set up earlier in this quickstart, then click Confirm Source.
+On the settings page, locate the setting line for the tracking ID or other API key to connect to your destination.
+Enter the ID or API key and click Save.
+Click Back to Destination, then click the toggle to enable the destination.
+Congratulations! Data is now flowing from the source you set up, to the first destination. Do some test browsing on your site or app, then log in to your downstream tool to see the data in place.
+You can click around and load pages to see your Segment calls in action, watch them arrive in the Debugger, and see them arrive in the destination tool.
+Note: When you’re done with this test source and destination, you can delete them. This prevents you from getting unplanned “demo” data in your production environment later.
+
+Planning a Full Installation
+Now that you’ve seen Segment in action, step back and think through what a full implementation of Segment for your organization would look like. Figuring out what events to track in Segment can feel overwhelming. You should expect this planning process to have the following steps:
+Define Business Objectives
+Decide what to collect
+Shortcut: Check if a Business Spec meets your needs
+B2B Spec
+Ecommerce Spec
+Mobile Spec
+Video Spec
+Create naming conventions
+Develop a Tracking Plan
+Plan your Identify and Group calls
+Plan your Track events
+Define your Track event properties
+Plan for destination tools
+Be prepared to invest time deciding with stakeholders how to track your data, and planning how you’ll analyze it. The time you spend here will save you lots of time in the future, as following Segment’s best practices allows you to easily change your tracking later.
+Define Business Objectives
+Tracking is about learning and taking action. Think about what you want to know about your product or customers. Think about what assumptions need to be tested and what theories need to be proven true or false. Think about the unknowns. Here are some helpful questions to get started:
+What kind of events or data best illustrate or explain how your customers use your product?
+How do people discover, start using, and paying for your product?
+What are the most important steps in a customer’s journey?
+While it may seem obvious, we highly recommend documenting your high-level business objectives. More specifically, ask yourself: what are the measurable business outcomes you want to achieve this year? Do you want to acquire new customers? Generate more new sign-ups, drive more incremental revenue among your current customer base?
+The best way to answer this question is to interview stakeholders in your organization who will consume the data.
+With your business goals documented, the next step is to map user actions to those business goals. For example, if one of your goals is to activate new signups, you want to think about which activities are related to a signup. Ask yourself, what actions do people take before signing up? Do specific actions predict a user signing up?
+As an example, you might end up with a list like this:
+Ad Campaign Clicked
+Link Clicked
+Article Completed
+Campaign Opened
+Form Initiated
+Form Submitted
+User Signed Up
+While this list represents a tiny fraction of the user actions you could track, it gives a list focused on your top business objectives. This helps break up the huge project of data collection into smaller chunks.
+Decide what to collect
+With your business objectives documented and mapped to user actions, it’s time to build standards that you can use when deciding what to track. With your stakeholders, make a list of the actual events (page or screen views, and user actions) that you want to track. Think about all of the ways your users can interact with your site or app
+When you’re first starting out, we recommend that you limit your tracking plan to a few core events, but add lots of properties to provide context about them. We generally see more success with the “less is more” philosophy of tracking data, but you might also decide to take a more liberal “track more and analyze later” approach. Like everything, each alternative has pros and cons that are important to consider especially as it relates to your company’s needs.
+Shortcut: Check if a Business Spec meets your needs
+Segment maintains several “Business Specs”, which are recommendations based on your type of business that give recommendations on what to track, what additional traits or properties to collect, and how to format them. The two most common are the B2B (business-to-business) Spec, Ecommerce Spec, and Mobile and Video specs.
+If these specs meet your business needs, you’re in luck. These specs are built into Segment tracking plan templates, so you don’t need to start from a blank slate.
+B2B Spec
+If your organization sells a product or services to other businesses, you might have different analytics and marketing needs than most companies. You need to understand your customer behaviors both at the user-level, and also at the company or team-level. You can read more about how Segment thinks about B2B tracking, and read more about the B2B Spec.
+Ecommerce Spec
+If your organization sells products online, the E-commerce Spec covers the customer’s journey as they browse your store, click on promotions, view products, add those products to a cart, and complete a purchase. It also provides recommendations about off-page interactions, including interactions with email promotions, coupons, and other systems. You can read more about why companies need an Ecommerce Spec, read more about Ecommerce tracking plans, and dive directly into our Ecommerce Spec.
+Mobile Spec
+The native Mobile Spec is a common blueprint for the mobile user lifecycle. The Spec outlines the most important events for mobile apps to track, and automatically collects many of these events when you use the Segment Android and iOS SDKs. Read more about the benefits of the native mobile spec, or read through the Native Mobile Spec directly.
+Video Spec
+Segment’s video spec helps you understand how customers engage with your video and ad content, including playback events, types of media displayed, and performance metrics. You can read more about our Video Spec.
+Create naming conventions
+Regardless of approach, here are some important best practices to keep in mind:
+Pick a casing convention: We recommend Title Case for event names and snake_case for property names. Make sure you pick a casing standard and enforce it across your events and properties.
+Pick an event name structure: As you may have noticed from our specs, we’re big fans of the Object (Blog Post) + Action (Read) framework for event names. Pick a convention and stick to it.
+Don’t create event names dynamically: Avoid creating events that pull a dynamic value into the event name (for example, User Signed Up (11-01-2019)). If and when you send these to a warehouse for analysis, you end up with huge numbers of tables and schema bloat.
+Don’t create events to track properties: Avoid adding values to event names when they could be a property. Instead, add values as a property. For example, rather than having an event called “Read Blog Post - Best Tracking Plans Ever”, create a “Blog Post Read” event and with a property like "blog_post_title":"Best Tracking Plans Ever".
+Don’t create property keys dynamically: Avoid creating property names like "feature_1":"true","feature_2":"false" as these are ambiguous and very difficult to analyze
+An image comparing good and bad naming and collection standards
+Got all that? Great. You’re now ready to develop a Tracking Plan.
+Develop a tracking plan
+A tracking plan clarifies what events to track, where those events live in the code base, and why you’re tracking those events (from a business perspective). A good tracking plan represents the single source of truth about what data you collect, and why.
+Your tracking plan is probably maintained in a spreadsheet (unless you use Segment’s tracking-plan tool, Protocols), and serves as a project management tool to get your organization in agreement about what data to use to make decisions. A tracking plan helps build a shared understanding of the data among marketers, product managers, engineers, analysts, and any other data users.
+Plan your Identify and Group calls
+The Identify call updates all records of the user with a set of traits, and so is extremely important for building your understanding of your users. But how do you choose which traits to include? The example below shows an Identify call using analytics.js) for Segment:
+analytics.identify({
+  name: 'Jane Kim',
+  email: 'janekim@example.com',
+  login: 'janekay',
+  type: 'user',
+  created: '2016-11-07T16:40:52.238Z',
+});
+The traits represent dimensions in your data that you can group or pivot on. For example, in the above, you can easily create cohorts of all types that are users or accounts created within a time window of your choosing.
+When you plan your deployment, think about what information you can collect as traits that would be useful to you when grouping users together, and plan how you will collect that information.
+The Group call is similar to the Identify call, but it adds traits associated with a parent account to the user’s profile. If your organization is a B2B company, you should also plan the group traits to collect, and how you’ll use them once they’re applied to a user account.
+Plan your Track events
+We recommend starting with fewer events that are directly tied to one of your business objectives, to help avoid becoming overwhelmed by endless number of possible actions to track. As you get more comfortable, you can add more events to your tracking plan that can answer more specialized questions.
+At Segment, we started out tracking these events:
+User Signed Up
+Source Data Sent
+Subscription Started
+Then we added some peripheral events to to better understand how we’re performing, for the following reasons:
+User Invited When users invite more people to their organization, it’s a good indicator that they’re engaged and serious about using the product. This helps us measure growth in organizations.
+Destination Enabled Turning on a destination is a key value driver for our customers.
+Debugger Call Expanded When we see that a certain customer has used the live event stream feature a number of times, we can contact see if we can help them debug.
+For an Ecommerce company, however, the main events might be something like:
+Account Created
+Product Added
+Order Completed
+Tip: As mentioned above, Segment has a set of “reserved” event names specifically for ecommerce, called the Ecommerce Spec. Check it out to see which events Segment covers and how they are used in downstream destinations.
+An online community, on the other hand, has an entirely different set of actions that indicate engagement, as listed below. For example, a community might want to track actions like:
+Content Viewed
+Content Shared
+Comment Submitted
+Content Produced
+Content Curated
+With these actions tracked, the community can develop metrics around engagement, and understand how users move towards their ultimate conversion events. You can read more in this article from the online community GrowthHackers about the events they track and why.
+Define your Track event properties
+Each Track call can accept an optional dictionary of properties, which can contain any key-value pair. These properties act as dimensions that allow destination tools to group, filter, and analyze the events. They give you additional detail on broader events.
+Events should be generic and high-level, but properties should be specific and detailed. For example, at Segment, Business Tier Workspace Created is a horrible event name. Instead, we used Workspace Created with a property of account_tier and value of business :
+analytics.track('Workspace Created', {
+  account_tier: 'business'
+})
+Similar to the traits in the Identify call, the properties provide a column that you can pivot against or filter on in your analytics tools or allow you to create a cohort of users in email tools.
+Don’t create dynamically generated property names in the properties dictionary. Each key creates a new column in your downstream tools, and dynamically generated keys clutter your tools with fragmented data that makes it difficult and confusing to use later.
+Here is Segment’s Lead Captured Track call:
+analytics.track(userId, 'Lead Captured', {
+  email: 'email',
+  location: 'header navbar'
+  url: 'https://segment.com/'
+});
+The high-level event is Lead Captured, and all of the details appear in the properties dictionary. Because of this, we can easily see in our downstream tools how many leads were captured, and from which parts of the site.
+If you want to learn more about how properties are used by downstream tools, check out The Anatomy of a Track Call.
+Plan for destination tools
+Once you’ve completed your tracking plan, there’s one more step you might want to do before you move on to actually implementing Segment. The Segment destination catalog contains hundreds of tools, many of which you’ll be familiar with already.
+If your organization has an established set of analytics tools, look for those tools in the catalog and bookmark their documentation pages. These docs pages contain important information about how Segment transforms data for the destination tool, and they also contain useful details about troubleshooting, set-up, and implementation considerations.
+Once you have an initial list of the destination tools your organization uses, you can also check which Segment methods those tools accept. This helps you at implementation time to ensure that the calls you use can be consumed by the tools they’re intended for.
+Additionally, you should check which connection modes each tool supports, so you know ahead of time which destinations may need to be bundled.
+Tip: If you know you’re looking for a tool for a specific purpose, but haven’t chosen one yet, you can also check the Connection Modes by category page to see which tools might be compatible with the least implementation changes.
+
+A Full Segment Implementation
+Before you start implementing from your tracking plan, let’s review the Segment methods, what they do, and when you should use each.
+Segment methods in detail
+Segment’s libraries generate and send messages to our tracking API in JSON format, and provide a standard structure for the basic API calls. We also provide recommended JSON structure (also known as a schema, or ‘Spec’) that helps keep the most important parts of your data consistent, while allowing great flexibility in what other information you collect and where.
+There are six calls in the basic tracking API, which answer specific questions:
+Identify: Who is the user?
+Track: What are they doing?
+Page: What web page are they on?
+Screen: What app screen are they on?
+Group: What account or organization are they part of?
+Alias: What was their past identity?
+Among these calls, you can think of Identify, Group, and Alias as similar types of calls, all to do with updating our understanding of the user who is triggering Segment messages. You can think of these calls as adding information to, or updating an object record in a database. Objects are described using “traits”, which you can collect as part of your calls.
+The other three, Track, Page, and Screen, can be considered as increasingly specific types of events. Events can occur multiple times, but generate separate records which append to a list, instead of being updated over time.
+A Track call is the most basic type of call, and can represent any type of event. Page and Screen are similar and are triggered by a user viewing a page or screen, however Page calls can come from both web and mobile-web views, while Screen calls only occur on mobile devices. Because of the difference in platform, the context information collected is very different between the two types of calls.
+Segment recommends that you always use the Page and Screen calls when recording a page-view, rather than creating a “Page Viewed” Track event, because the Page/Screen calls automatically collect more contextual information.
+Anatomy of a Segment message
+The most basic Segment message requires only a userID or anonymousID; all other fields are optional to allow for maximum flexibility. However, a normal Segment message has three main parts: the common fields, the “context” object, and the properties (if it’s an event) or traits (if it’s an object).
+The common fields include information specific to how the call was generated, like the timestamp and library name and version. The fields in the context object are usually generated by the library, and include information about the environment in which the call was generated: page path, user agent, OS, locale settings, etc. The properties and traits are optional and are where you customize the information you want to collect for your implementation.
+Another common part of a Segment message is the integrations object, which you can use to explicitly filter which destinations the call is forwarded to. However this object is optional, and is often omitted in favor of non-code based filtering options.
+Identify calls
+analytics.identify (user_id: "12345abcde",
+  traits: {
+    email: 'michael.phillips@segment.com',
+    name: 'Michael Phillips',
+    city: 'New York',
+    state: 'NY',
+    internal: True })
+The Identify call allows Segment to know who is triggering an event.
+When to call Identify
+Call Identify when the user first provides identifying information about themselves (usually during log in), or when they update their profile information.
+When called as part of the login experience, you should call Identify as soon as possible after the user logs in. When possible, follow the Identify call with a Track event that records what caused the user to be identified.
+When you make an Identify call as part of a profile update, you only need to send the changed information to Segment. You can send all profile info on every Identify call if that makes implementation easier, but this is optional.
+Learn More
+Best Practices for Identifying Users
+Traits in Identify calls
+These are called traits for Identify calls, and properties for all other methods.
+The most important trait to pass as part of the Identify call is userId, which uniquely identifies a user across all applications.
+You should use a hash value to ensure uniqueness, although other values are acceptable; for example, email address isn’t the best thing to use as a userid, but is usually acceptable since it will be unique, and doesn’t change often.
+Beyond that, the Identify call is your opportunity to provide information about the user that can be used for future reporting, so you should try to send any fields that you might want to report on later.
+Consider using Identify and traits when:
+Gathering user profile data (for example, company, city/state, job title, or other user-level data)
+Gathering company-level data (for example, company size, number of seats, etc)
+How to Call Identify
+You can call Identify from any of Segment’s device-based or server-based libraries, including Javascript, iOS, Android, Ruby, and Python.
+Here are two examples of calling Identify from two different libraries:
+JavaScript Identify call
+Ruby Identify call
+analytics.identify("12345abcde", {
+  "email": "michael.phillips@segment.com",
+  "name": "Michael Phillips",
+  "city": "New York",
+  "state": "NY",
+  "internal": True
+});
+Using analytics.reset()
+When a user explicitly signs out of one of your applications, you can call analytics.reset() to stop logging further event activity to that user, and create a new anonymousId for subsequent activity (until the user logins in again and is subsequently identify-ed). This call is most relevant for client-side Segment libraries, as it clears cookies in the user’s browser.
+Make a reset() call as soon as possible after sign-out occurs, and only after it succeeds (not immediately when the user clicks sign out). For more info on this call, see the JavaScript source documentation.
+Page and Screen
+The Page and Screen calls tell Segment what web page or mobile screen the user is on. This call automatically captures important context traits, so you don’t have to manually implement and send this data.
+Page context auto-captured	Screen context auto-captured	 	 
+title	window.location.title	app	build, name, namespace, version
+url	window.location.url	device	adTrackingEnabled, advertisingId (IDFA/AAID), device ID, manufacturer, model, type (android/ios)
+path	window.location.path	library	name, version
+referrer	window.document.referrer	locale	window.document.referrer
+search	window.location.search	network	cellular, wifi
+ip	address	ip	address
+userAgent	string	os	name, version
+campaign	utm_source, utm_medium, utm_campaign, utm_content	screen	height, width
+Page and Screen call properties
+You can always override the auto-collected Page/Screen properties with your own, and set additional custom page or screen properties.
+Some downstream tools (like Marketo) require that you attach specific properties (like email address) to every Page call.
+This is considered a destination-specific implementation nuance, and you should check the documentation for each destination you plan to use and make a list of these nuances before you start implementation.
+Named Page & Screen Calls
+You can specify a page “Name” at the start of the page or Screen call, which is especially useful to make list of page names into something more succinct for analytics. For example, on an ecommerce site you might want to call analytics.page( "Product" ) and then provide properties for that product:
+Named Page Call for Javascript
+Named Screen Call for iOS
+analytics.page("Product", {
+  "category": "Smartwatches",
+  "sku": "13d31"
+});
+When to Call Page
+Segment automatically calls a Page event whenever a web page loads. This might be enough for most of your needs, but if you change the URL path without reloading the page, for example in single page web apps, you must call Page manually .
+If the presentation of user interface components don’t substantially change the user’s context (for example, if a menu is displayed, search results are sorted/filtered, or an information panel is displayed on the exiting UI) measure the event with a Track call, not a Page call.
+Note: When you trigger a Page call manually, make sure the call happens after the UI element is successfully displayed, not when it is called. It shouldn’t be called as part of the click event that initiates it.
+For more info on Page calls, review Page spec and Analytics.js docs.
+When to call Screen
+Segment Screen calls are essentially the Page method, except for mobile apps. Mobile Screen calls are treated similarly to standard Page tracking, only they contain more context traits about the device. The goal is to have as much consistency between web and mobile as is feasible.
+Track calls
+The Track call allows Segment to know what the user is doing.
+When to call Track
+The Track call is used to track user and system events, such as:
+The user interacting with a UI component (for example, “Button Clicked”)
+A significant UI component appearing, other than a page (for example, search results or a payment dialog)
+Events and Properties
+Your Track calls should include both events and properties. Events are the actions you want to track, and properties are the data about the event that are sent with each event.
+Properties are powerful. They enable you to capture as much context about the event as you’d like, and then cross-tabulate or filter your downstream tools. For example, let’s say an eLearning website is tracking whenever a user bookmarks an educational article on a page. Here’s what a robust analytics.js Track call could look like:
+analytics.track('Article Bookmarked', {
+  "title": 'How to Create a Tracking Plan',
+  "course": 'Intro to Data Strategy',
+  "author": 'Dr. Anna Lytics',
+  "publish_year": '2019',
+  "publish_month": '03',
+  "length": 'Medium - 1000-2000 words',
+  "assets": {'Infographics','Interactive Charts'},
+  "topics": {'Data Planning','Segment','Data Flow'},
+  "button_location": 'Subheader - 3rd Column'
+});
+With this Track call, we can analyze which authors had the most popular articles, which months and years led to the greatest volume of bookmarking overall, which button locations drive the most bookmark clicks, or which users gravitate towards infographics related to Data Planning.
+Event Naming Best Practices
+Each event you track must have a name that describes the event, like ‘Article Bookmarked’ above. That name is passed in at the beginning of the Track call, and should be standardized across all your properties so you can compare the same actions on different properties.
+Segment’s best practice is to use an “Object Action” (Noun<>Verb) naming convention for all Track events, for example, ‘Article Bookmarked’.
+Segment maintains a set of Business Specs which follow this naming convention around different use cases such as eCommerce, B2B SaaS, and Mobile.
+Let’s dive deeper into the Object Action syntax that all Segment Track events should use.
+Objects are Nouns
+Nouns are the entities or objects that the user or the system acts upon.
+It’s important to be thoughtful when naming objects so that they are referred to consistently within an application, and so that you refer to the same objects that might exist in multiple applications or sites by the same name.
+Use the following list of objects to see if there is a logical match with your application. If you have objects that aren’t in this list, name it in a way that makes sense if it were to appear in other applications, and/or run it by Product Analytics.
+Some suggested Nouns
+Menu
+Navigation Drawer (the “Hamburger” menu in the upper left corner of a UI)
+Profile
+Account
+Video
+Actions are Verbs
+Verbs indicate the action taken by either a user on your site. When you name a new Track event, consider if you can describe the current interaction using a verb from the list below.
+If you can’t, choose a verb that describes what the user is trying to do in your specific case, but try to be flexible enough so that you could use it in other scenarios.
+Some suggested Verbs
+Applied - Applying a new format to the UI results.
+Clicked - Catch-all for events where a user activated some part of the UI but no other verb captures the intent.
+Created/Deleted - The user- or system-initiated action of creating or deleting an object (e.g., new search, favorite, post)
+Displayed/Hidden - The user- or system-initiated action of hiding or displaying an element
+Enabled/Disabled - Enabling or disabling some feature (e.g., audible alarms, emails, etc).
+Refreshed - When a set of search results is refreshed.
+Searched - When an app is searched
+Selected - User clicked on an individual search result.
+Sorted - The user or UI action that causes data in a table, for example, to be sorted
+Unposted - Making a previously publicly-viewable posting private.
+Updated - The user action that initiates an update to an object (profile, password, search, etc.; typically be making a call to the backend), or the they system having actually completed the update (often this tracking call will be made in response to a server-side response indicating that the object was updated, which may or may not have an impact on the UI).
+Viewed - (exactly what it says on the tin)
+Property naming best practices
+Segment recommends that you record property names using snake case (for example property_name), and that you format property values to match how they are captured. For example, a username value would be captured in whatever case it the user typed it in as.
+Ultimately, you can decide to use a casing different from our recommendations; however, the single most important aspect is that you’re consistent across your entire tracking with one casing method.
+You can read more about best practices for Track calls, .
+All of the basic Segment methods have a common structure and common fields which are automatically collected on every call. You can see these in the common fields documentation.
+Common properties to send with a Track call
+The following properties should be sent with every Track call:
+Event Context	Property Name	Description
+Any Track call	initiator	States whether the event was initiated by the user or the system.
+Any Track call	display_format	Responsive or not (or some other indicator of the current page layout template)
+Search Initiated or Search Results Displayed	[Search Parameters]	All search parameters, with the names being the snake case version of the internal names.
+Search Results Displayed	total_result_count	The total number of results returned that match the search parameters. This number represents the number of results that could be returned to the user even if only a subset of those were actually returned (for example, if the results are paginated).
+Paginated List Displayed	total_items_pages	The total number of pages of items available to be viewed by the user.
+Paginated List Displayed	items_per_page	The number of possible items in each page of items (for example, if the UI is showing 50 search results per page). The actual number of items in the current page may be less than this number if, for example, the system is displaying the last page of results and there aren’t enough results to fill to the page’s maximum (for example, if there are 27 results when the page could display as many as 50).
+Paginated List Displayed	current_item_page	The current page number displayed to the user.
+External Link Clicked	destination_url	The URL that the user is taken to when clicked. Ideally, this will be the final destination (for example, after any redirects), but only the immediate destination is likely in most cases.
+Item List Sorted	sort_column	The internal name of the column that was sorted.
+Item List Sorted	sort_direction	Whether the items sort in ascending or descending order.
+How to call Track
+You can make a Track call from any of Segment’s client-side or server-side libraries, including JavaScript, iOS, Android, Ruby, and Python. Here are two examples of calling Track from two different libraries:
+JavaScript Track call
+Ruby Track call
+analytics.track('Article Bookmarked', {
+  "title": 'How to Create a Tracking Plan',
+  "course": 'Intro to Data Strategy',
+  "author": 'Dr. Anna Lytics',
+});
+
+Sending data to destinations
+Once you’ve got data flowing into Segment, what do you do with it? The Segment Destination catalog lists all of the places we can send your data.
+Routing data to destinations
+When you enable a destination in the Segment App, you link it to a specific source (or sources). By default, Segment first processes the data from the selected source(s), then translates it and routes it from the Segment servers to the API endpoint for that destination.
+This means that if you previously had loaded code or a snippet for that tool on your website or app, you should remove it once you have Segment implemented so you don’t send duplicate data.
+You might also want to enable tools that need to be loaded on the user’s device (either a computer or mobile device) in order to function properly. For our Analytics.js library, you can make these changes from the Segment App, and the Segment systems then update the bundle of code served when users request the page to include code required by the destination. You can read more about this in our documentation on Connection Modes.
+Adding new destinations
+Adding a destination is quick and easy from the Segment App. You’ll need a token or API key for the tool, or some way to confirm your account in the tool.
+From your Segment workspace, click Add destination. You can find this option on the Connections home page, from the Destinations list, or from a Source overview page.
+Search for the destination in the Catalog, and click the destination’s tile.
+From the destination summary page that appears, click Configure.
+Choose which source should send data to this destination, and click Confirm source.
+In the Connection Settings that appear, enter any required fields. These might be an API key, an account ID, a token, or you might be prompted to log in to the tool.
+If needed, click the toggle to enable the destination so it begins receiving data.
+Recommended destinations
+If you’re just starting out, we know the catalog can be really overwhelming. How do you choose from all of the available destinations?
+We’ve written a lot about how to choose your tools, but as a start, we recommend that you have one tool from each of the following categories:
+Analytics
+Email marketing
+Live-chat
+If you’re adding more destinations after you’ve done your Segment instrumentation, you might want to check that the destinations you choose can accept the methods you’re already using, and that they can use the Connection Modes you’re already using.
+We also feel that it’s really important to have a data warehouse, so you can get a clearer view of all of your data for analytics purposes. More on that just below.
+Adding a warehouse
+Warehouses are a special type of destination which receive streaming data from your Segment sources, and store it in a table schema based on your Segment calls. This allows you to do a lot of interesting analytics work to answer your own questions about what your users are doing and why.
+All customers can connect a data warehouse to Segment. Free and Team customers can connect one, while Business customers can connect as many as needed.
+You should spend a bit of time considering the benefits and tradeoffs of the warehouse options, and then choose one from our warehouse catalog.
+When you choose a warehouse, you can then use the steps in the documentation to connect it. This may require that you create a new dedicated user (or “service user”) to allow Segment to access the database.
+Once your warehouse is configured and running, you can connect to it using a Business Intelligence (BI) tool (such as Looker, Mode, Tableau, or others) to analyze your data in-depth.
+There are also a number of Business tier features you can then use with your warehouse, including selective sync and Replay.
+Segment University: Warehouses
+Check out our course on warehouses in Segment University. (Must be logged in to access.)
+
+Testing and Debugging
+One of the most important questions you’ll ask early on is “How do I know if Segment is working?”
+There are several ways to check if your data is flowing. One is the Debugger tab in each Source in the Segment web app, where you can see data coming from a source into Segment. Another is the Event Delivery tool which shows which data is arriving at specific destinations.
+For monitoring purposes, you’ll also see alerts in the Workspace Health tool if your sources or destinations produce repeated errors.
+Segment University: Debugging and Troubleshooting
+Want more? Check out our course on debugging and troubleshooting. (Must be logged in to access.)
+The Source Debugger
+The Source Debugger is a real-time tool that helps you confirm that API calls made from your website, mobile app, or servers arrive to your Segment Source, so you can troubleshoot your Segment set up even quicker. With the Debugger, you can check that you’re sending calls in the expected format, without having to wait for any data processing.
+Debugger view
+The Debugger is separate from your workspace’s data pipeline and is not an exhaustive view of all the events ever sent to your Segment workspace. The Debugger only shows a sample of the events that the Source receives in real time, with a cap of 500 events. The Debugger is a great way to test specific parts of your implementation to validate that events are being fired successfully and arriving to your Source.
+To see a more complete view of all your events, we recommend that you set up either a warehouse or an S3 destination.
+The Debugger shows a live stream of sampled events arriving into the Source, but you can also pause the stream from displaying new events by toggling “Live” to “Pause”. Events continue to arrive to your Source while you Pause the stream.
+You can search in the Debugger to find a specific payload using any information you know is available in the event’s raw payload. You can also use advanced search options to limit the results to a specific event.
+Debugger search options
+Two views are available when viewing a payload:
+The Pretty view is a recreation of the API call you made that was sent to Segment.
+The Raw view is the complete JSON object Segment received from the calls you sent. These calls include all the details about what is being tracked: timestamps, properties, traits, ids, and contextual information Segment automatically collects the moment the data is sent.
+Event Delivery
+The Event Delivery tool helps you see if Segment is encountering issues delivering your data from your sources to their connected destinations. 
+Segment sends billions of events to destinations every week. If our systems encounter errors when trying to deliver your data, we report them in the Event Delivery tool.
+Here is an example of what the Event Delivery tool looks like:
+Event Delivery tool example
+Event Delivery is most useful when: 
+When data seems to be missing in your destination. For example, you have Google Analytics set up as a destination and your recent data looks incomplete
+When setting up a destination for the first time.  For example, you are connecting Google Analytics to your Node Source. Once you’ve entered your credentials and turned the destination on, you can use this feature to see whether events are successfully making it to GA in near realtime. 
+You can access the Event Delivery tool from the destination Settings tab in any supported destination.
+Access the Event Delivery tool
+Event Delivery is only available for cloud-mode destinations, which receive data through the Segment servers. Device-mode destinations receive data through an API endpoint outside the Segment servers, where we cannot monitor or report on it. Event delivery is not available for Warehouses or Amazon S3 destinations.
+Using Event Delivery
+The UI shows three parts that report on Segment’s ability to deliver your source data: Key Metrics, Error Details, and Delivery Trends.
+Before you begin, select a time period from the drop down menu at the right. The Event Delivery display updates to show only information about your selected time period.
+Select a time period from the dropdown menu
+Key metrics
+This panel displays quantitative information about the destination’s data flow:
+Delivered: The number of messages Segment successfully delivered to the destination in the selected time period.
+Not Delivered: The number of messages Segment was unable to deliver. If this number is greater than zero, the reasons for these failures appear in the errors table below. 
+P95 Latency: The time it takes for Segment to deliver the slowest 5% of your data (known as P95 latency). The latency reported is end-to-end: from the event being received through the Segment API, to the event being delivered to partner API. This helps tell you if there is a delay in your data pipeline, and how severe it is.
+Error details
+The Error details table displays a summary of the errors in a given period, and the most important information about them. You can click any row in the table to expand it to show more information. 
+Error details table
+The Error Details view gives you as much information as possible to help you resolve the issue. The example below shows an example Error Details panel. 
+Error details panel example
+This view includes: 
+Description The event delivery UI provides a human-friendly summary of the error, based on the payload Segment received back from the partner.
+Actions These are actions you can take, based on what Segment knows about the issue. 
+More Info Links to any documentation that might be helpful to you. 
+Sample payloads To help you debug, Segment provides sample payloads from every step of the data’s journey:
+You Sent - the data you sent to Segment’s API.
+Request to Destination - the request Segment made to the Partner API. This payload will likely be different from what you sent it because Segment is mapping your event to the partner’s spec to ensure the message is successfully delivered. 
+Response from Destination - the response Segment received from the Partner API. This will have the raw partner error. If you need to troubleshoot an issue with a Partner’s Success team, this is usually something they’ll want to see. 
+View Segment’s list of Integration Error Codes for more information about what might cause an error.
+Trends
+When debugging, it’s helpful to see when issues start, stop and how they trend over time. 
+The Event Delivery view shows a graph with the following information:
+Delivered: The number of events that were successfully delivered in the time period you selected. 
+Not delivered: The number of events that were not successfully delivered in the time period you selected. 
+The Latency view shows the end-to-end P95 latency during the time period you selected.
+
+What's Next
+You’re just getting started with Segment, but there’s so much more to explore!
+Privacy tools and filtering
+Segment includes a free suite of Privacy tools to help your organization comply with regulations like the GDPR and the CCPA.
+The Privacy Portal allows you to easily audit, monitor, and enforce privacy rules against your Segment data, to proactively protect your customers.
+Improve data quality with Protocols
+You had a taste of the planning needed to set up clear, consistent, reliable and extensible data schemas in Planning a Full Install.
+Business tier customers can use Segment’s Protocols package to help with this process, to keep track of what data is being collected where, and to normalize their data as it flows through Segment. Clean, consistent data helps you move faster to build marketing campaigns and act on analytics insights.
+With Protocols, you can use Tracking Plans to build consensus in your organization about which events and property you intend to collect across your web, mobile or server-side data sources. Once defined, you can connect the Tracking Plan to your Sources to automatically validate the data is flowing correctly. You can also turn on enforcement to block bad data, and even fix incorrect data with Transformations.
+Single view of the customer with Engage
+Engage is a powerful personalization platform that enables you to create unified customer profiles in Segment, to build and enrich audiences, and to activate audiences across marketing tools.
+With Engage, you can create unified customer profiles, enrich those profiles with new traits, build Audiences using those profiles, and sync audiences to marketing tools to power personalized experiences, and better understand and market to your customers.
+More learning resources
+Segment University
+Segment University is Segment’s free, online classroom for learning the basics of Segment.
+Analytics Academy
+Analytics Academy is a series of lessons designed to help you understand the value of analytics as a discipline, and to help you think through your analytics needs, and get started creating robust and flexible analytics systems to help you grow.
+Recipes
+Need ideas or prior art? Segment Recipes are some cool things you can do by hooking your Segment workspace up to different Destination tools. Everything from sending tailored onboarding emails, to joining and cleaning your data with third party tools
+Other Resources
+Still hungry for more? Check out our list of other Segment Resources!
+Technical Support
+If you’re experiencing problems, have questions about implementing Segment, or want to report a bug, you can fill out our support contact form here and our Product Support Engineers will get back to you.
+You need a Segment.com account in order to file a support request. Don’t worry! You can always sign up for a free workspace if you don’t already have one.
+
+Use Cases Overview
+Use Cases are pre-built Segment setup guides tailored to common business goals.
+Use Cases eliminate guesswork with a structured approach to onboarding, helping you configure Segment correctly and align its features to your business objectives.
+You can onboard to Segment with a Use Case if you’re a new Business Tier customer or haven’t yet connected a source and destination.
+Onboard to Segment with Use Cases
+Choosing a Use Case
+Not sure where to start? Read through Segment's Choosing a Use Case guide, which breaks down the available business goals and their associated use cases.
+Step-by-Step Use Cases Setup Guide
+Follow the steps in the Use Cases Setup guide to get up and running with Segment.
+Use Cases Reference
+Looking for something more technical? View the Use Cases Reference, which lists the tracking events, connections, and destinations Segment recommends for each use case.
+Take the next step
+Explore the following core Segment features, all of which power Use Cases.
+Connections
+Collect event data from your mobile apps, websites, and servers.
+Destinations
+Forward your data to the business tools and apps your business uses.
+Unify
+Track user interactions, resolve their identities, and explore Profiles.
+Engage
+Build, enrich, and activate audiences with Segment's personalization platform.
+
+Choosing a Use Case
+Segment built Use Cases to streamline the process of implementing Segment for specific business objectives.
+This guide will help you navigate through the available use cases and select the one that best aligns with your business goals.
+You can onboard to Segment with a Use Case if you’re a new Business Tier customer or haven’t yet connected a source and destination.
+Understanding business goals and use cases
+Segment supports 25 use cases, organized into 4 main business goals:
+Optimize advertising
+Personalize first conversion
+Boost retention, upsell, and cross-sell
+Personalize communications and product experiences
+These goals represent key ways businesses often use customer data for improved performance and growth.
+Looking for a technical breakdown of each use case? View the Use Cases Reference.
+Selecting your use case
+Follow these steps to identify which use case to implement:
+Identify your primary business challenge or goal from the four business goals.
+Review the use cases associated with that goal, considering how each aligns with your specific needs.
+Evaluate your current data collection capabilities and the resources you have available.
+Consider your long-term business strategy and how different use cases might support your future goals.
+If you’re unsure, start with a use case that addresses your most pressing current need.
+The use case you select will guide your Segment setup, including the events you’ll track and the integrations you’ll implement. However, Segment’s flexibility allows you to adapt and expand your strategy over time as your business needs evolve.
+The following sections explore each business goal and associated use cases in detail.
+Optimize advertising
+The Optimize advertising business goal focuses on improving the efficiency and effectiveness of your advertising efforts. By using your customer data effectively, you can create more targeted campaigns, reduce wasted ad spend, and increase your return on investment (ROI).
+Key considerations for this goal:
+Are you looking to expand your customer base with similar high-value customers?
+Do you need to drive app installations?
+Are you trying to increase signups or prevent cart abandonment?
+Do you want to retain high-value customers or optimize your ad spend?
+Use cases in this category include:
+Use Case	Description
+Build high-value lookalikes	Identify and target potential customers who share characteristics with your most valuable existing customers.
+Build lookalikes for app install	Find potential users who are likely to install your app. This is particularly useful for mobile app businesses looking to efficiently grow their user base.
+Increase signups with lookalikes	Target potential users who are likely to sign up for your service, based on the characteristics of your existing registered users.
+Mitigate cart abandonment	Identify users who have abandoned their carts and create targeted campaigns to encourage these users to complete their purchases.
+Mitigate high value churn	Focus on identifying high-value customers who are at risk of churning and create targeted campaigns to retain them.
+Suppress based on time	Optimize your ad spend by suppressing ads to users who have recently converted or interacted with your brand, preventing unnecessary ad exposure.
+Suppress with purchase	Focus on suppressing ads to users who have recently made a purchase.
+Personalize first conversion
+The Personalize first conversion goal focuses on optimizing the initial interactions a potential customer has with your brand. By personalizing these early touchpoints, you can increase the likelihood of converting prospects into customers.
+Key considerations for this goal:
+Are you looking to increase app installations or user sign-ups?
+Do you want to improve your onboarding process?
+Are you trying to convert free users to paid subscribers?
+Do you need to reduce cart abandonment rates?
+Use cases in this category include:
+Use Case	Description
+Accelerate app install	Focus on optimizing the user journey to encourage app installation.
+Accelerate onboarding	Create a personalized onboarding experience once a user has signed up or installed your app.
+Accelerate signup	Optimize the signup process, reducing friction and personalizing the experience to encourage more users to complete registration.
+Acquire paid subscriptions	Focus on identifying the most effective strategies to convert free users to paid subscribers.
+Convert trials to paid subscriptions	Tailored for businesses offering free trials. This use case helps you identify the best times and methods to encourage trial users to convert to paid subscriptions.
+Mitigate cart abandonment	Identify users who have abandoned their carts and create targeted campaigns to encourage these users to complete their purchases.
+Boost retention, upsell, and cross-sell
+The Boost retention, upsell, and cross-sell business goal focuses on maximizing the value of your existing customer base. By analyzing customer behavior and preferences, you can create targeted strategies to encourage repeat purchases, introduce customers to higher-value products or services, and increase overall customer lifetime value.
+Key considerations for this goal:
+Do you want to find more customers who share traits with your most valuable existing customers?
+Are you looking to increase the frequency of purchases from existing customers?
+Do you need to prevent churn among your high-value customers?
+Do you need to personalize your upsell or cross-sell efforts?
+Use cases in this category include:
+Use Case	Description
+Build high value lookalikes	Identify characteristics of your most valuable customers to inform retention and upsell strategies.
+Increase repeat purchases	Analyze customer purchase history and behavior to create personalized recommendations and incentives that encourage repeat purchases.
+Mitigate high value churn	Focus on identifying high-value customers who are at risk of churning and create targeted campaigns to retain them.
+Nurture with content	Focus on creating and delivering personalized content to keep customers engaged with your brand between purchases, ultimately driving long-term loyalty.
+Personalize upsell content	Analyze customer behavior and purchase history to create targeted upsell recommendations, increasing the average order value and customer lifetime value.
+Personalize winback	Focus on re-engaging inactive customers, using personalized messaging and offers based on their past behavior and preferences.
+Personalize communications and product experiences
+The Personalize communications and product experiences business goal focuses on creating tailored experiences for your customers across all touchpoints. With this business goal, you can create more relevant and engaging communications and product experiences, leading to increased satisfaction and loyalty.
+Key considerations for this goal:
+Do you want to personalize your onboarding process?
+Do youw want to increase customer engagement and repeat purchases?
+Do you need to create targeted content for different user segments?
+Are you trying to re-engage inactive customers?
+Use cases in this category include:
+Use Case	Description
+Accelerate onboarding	Create a personalized onboarding experience that extends beyond initial signup, helping to drive long-term engagement.
+Increase repeat purchases	Focus on personalizing the overall customer experience to drive repeat purchases.
+Mitigate high value churn	Create personalized experiences and communications to retain high-value customers at risk of churning.
+Nurture with content	Deliver personalized content experiences based on individual user interests and behaviors, keeping customers engaged with your brand.
+Personalize upsell content	Focus on personalizing the entire product experience to facilitate upsells.
+Personalize winback	Create personalized re-engagement campaigns for inactive users, tailoring the messaging and offers based on their past interactions with your brand.
+Next steps
+Once you’ve selected a use case, follow the Use Cases Setup Guide, which explains how to set up a use case.
+
+Use Cases Setup
+Use Cases help you onboard quickly and efficiently to Segment by guiding you through specific steps tailored to your business needs.
+This page walks you through the steps to set up a use case in your Segment instance.
+Permissions
+To implement a use case, you’ll need to be a Workspace Owner for your Segment account. See the Roles documentation for more information.
+You can onboard to Segment with a Use Case if you’re a new Business Tier customer or haven’t yet connected a source and destination.
+Use case setup overview
+From a high level, setting Segment up with a use case takes place in four stages:
+Pick your business goal. What do you want to achieve? Choose from 4 common business goals like optimizing advertising, personalizing first conversions, boosting retention, and increasing customer retention.
+Select a use case. After you pick your business goal, Segment shows you several potential use cases from which to choose.
+Follow the in-app guide. With your use case chosen, Segment shows you an interactive checklist of events to track, as well as sources and destinations that Segment recommends you connect. You’ll carry these steps out in a sandboxed development environment.
+Test and launch your setup. Push your connections to a production environment and verify that events flow as expected through the debugger. After you’re done, your Segment instance is up and running.
+Example setup: Personalize winback
+This section provides a detailed, step-by-step guide to setting up the Personalize Winback use case from the Personalize communications and product experiences business goal in your Segment account. All use cases follow this same setup flow.
+Step 1: Navigate to Use Cases
+Log in to your Segment account.
+If you see the Welcome to Segment screen, click Get Started. If logging in takes you to your Segment workspace, click Guided Setup.
+Step 2: Pick your business goal and select a use case
+Choosing a use case
+Segment lets you implement one use case. If you’re not sure which use case to choose, view Choosing a Use Case.
+In the What is your business goal? screen, select Personalize communications and product experiences, then click Next.
+Segment moves you to the Which use case would you like to set up? screen. Choose Personalize winback, then click Next.
+Segment shows you information about dev and prod labels. After you’ve read it, click Next.
+Segment takes you to the Setup checklist page.
+Working with dev and prod environments
+For most cases, you’ll want to start with development or staging sources to test and debug your Segment implementation. This approach lets you verify that everything is working correctly before sending live data downstream. To facilitate this, Segment automatically creates development (dev) and production (prod) spaces for you and labels your sources accordingly to simplify tracking.
+Segment strongly recommends beginning your setup in the dev environment. This allows for thorough testing and debugging of your configuration. Once you’re confident in your dev setup, Segment will guide you on how to apply these configurations to your live production sources.
+Step 3: Review suggested events
+Changing your use case
+Once you’ve reviewed the suggested events for a use case, you won’t be able to change the use case. If you want to see a full breakdown of each use case before commiting to one, click Change use case to begin the use case flow again. You can also view the Use Cases Reference guide to see what Segment recommends for each use case.
+On the Setup checklist page, you’ll see the full checklist for the use case you’ve chosen. This checklist applies to all use cases, though the suggested events, sources, and destinations differ between use cases.
+In the Review suggested events list item, click Review.
+Segment shows you the recommended events and properties typically tracked for your use case.
+Set up event tracking based on the events and properties Segment shows.
+This table shows Segment’s recommended events and properties for the Personalize winback use case:
+Events	Properties
+Page Viewed	page_category, page_name
+Page Scrolled	pct_scrolled, page_category
+Order Completed	num_items, order_id, checkout_id, total, revenue, shipping, tax, affiliation, products
+Make sure that you’re tracking these events to get the most of the Personalize winback campaign. For more information on event tracking, see Data Collection Best Practices.
+Step 4: Connect dev sources
+You’re now ready to connect sources to your dev environment.
+In the Connect dev sources step, Segment shows you the recommended sources you should connect. For Personalized winback, these include Website, Mobile, and Reverse ETL.
+Review the recommended sources, then click Connect.
+Segment takes you to the Add a source setup. Choose the source(s) you want to add, then click Next.
+Name your source, then click Create source.
+Carry out the source-specific steps, then click Next.
+Test your connection and troubleshoot it, if necessary. Click Done.
+(Optional:) Click Connect More and repeat steps 2 through 6 to add more sources.
+Adding a warehouse as a souce
+If you connect a warehouse as a source, Segment automatically creates a Profiles destination that shows up in the Connect your data tab. Do not delete this destination, as Segment requires this destination to create profiles from your warehouse.
+Cloud object sources
+If you connect a cloud object source, you’ll need to create a warehouse to sync profiles into Segment. For more information, see Cloud Sources.
+Step 5: Connect dev destinations
+With sources connected, you can now connect destinations to your dev environment.
+Under the Connect dev destinations step, Segment shows you the recommended sources you should connect. For Personalize winback, these include Reverse ETL, Personalization, and Analytics.
+Review the recommended destinations, then click Connect.
+Segment takes you to the Choose a Destination setup. Choose the destination(s) you want to add, then click Next.
+Name your destination, then click Create Destination.
+Choose a source to connect to the destination, then click Next.
+Carry out the destination-specific steps, then click Done.
+(Optional:) Click Connect More and repeat steps 2 through 6 to add more destinations.
+Step 6: Publish your setup to a prod environment
+Until this point, you’ve set up event tracking and connected sources and destinations to a development environment.
+After you’ve confirmed that data is flowing from your sources into your destinations as expected, you’re ready to publish your setup to a production environment.
+On the Setup checklist page, click the Prod environment tab.
+On the Connect 1 prod source radio button, click Connect.
+Segment shows you the sources you previously connected in your dev environment. Click the source you want to connect to prod, then click Continue.
+Carry out any additional steps in the Add a Source page, click Create Source, then click Next. Segment returns you to the Prod environment tab.
+Publish the events set up in your dev environment sources to production. Check the debugger to verify that data is flowing into Segment correctly, then click Mark as complete.
+On the Connect 1 prod destination bullet, click Connect.
+Segment shows you the destinations you previously connected in your dev environment. Click the source you want to connect to prod, then click Continue.
+Choose a source to connect to the destination, then click Next.
+Name your destination, then click Create Destination.
+Your data is now in production, and you’ve successfully configured Segment.
+Activate your data with Unify and Engage
+Now that you’ve successfully set up Connections and Destinations, you can build upon your Segment implementation with Unify and Engage.
+Accessing Unify and Engage
+Unify and Engage may not yet be enabled for your account. To add Engage to your Segment workspace, click Request a demo in the Unify and Engage tabs on the Guided Setup page.
+Step 1: Set up identifiers with Unify
+In the Guided Setup page, click Build profiles from your data.
+Click Add default identifiers. Segment displays the Select Identifiers popup.
+Select as many of the recommended identifiers that best fit your use case; Segment recommends selecting all identifiers. Click Save.
+On the Guided Setup page, click Mark complete.
+Your identifiers are now set up in your dev space, though it could take a few minutes for Segment to create profiles from your selected identifiers.
+For more information, see the Unify documentation.
+Step 2: Create audiences with Engage
+Click the Engage customers with your data tab, then click Create audience. Segment takes you to the New Audience Builder.
+On the Select Audience Type page, select either Users or Accounts, then click Next.
+Configure, preview, and create your audience.
+Segment then begins sending your new audience(s) to the destinations in your dev environment. Verify in those destinations that the audiences are coming through as intended, then click Mark complete.
+For more information on Audiences, see the Engage documentation.
+Step 3: Republish to a prod environment
+At this point, you’ll have already published your initial setup to a prod environment. Next, you’ll publish your Unify and Engage setup to the same prod environment.
+Return to the Prod environment tab.
+In the Build profiles from your data tab, click Import rules.
+Review the rules that Segment will import, then click Import.
+In the Engage customers with your data tab, click Create audience
+Configure, preview, and create your audience. Segment returns you to the Guided Setup page.
+Segment then begins sending your new audience(s) to the destinations in your dev environment. Verify in those destinations that your audiences are coming through as intended, then click Mark complete.
+Next steps
+Use Cases pulls together a number of core Segment features, like Sources, Destinations, data collection, and Reverse ETL. View the documentation for each to learn how you can continue to expand and build on what you’ve alreay achieved.
+Use Cases Reference
+This reference guide provides detailed information on the suggested events, sources, and destinations for each Segment use case. Use this guide to ensure you’re tracking the right events and connecting the best sources and destinations for your specific needs.
+Use Cases by business goal
+The business goal you select during onboarding determines the use cases that Segment shows you.
+This table lists each business goal and each of its corresponding use cases:
+Business Goal	Use Cases
+Optimize advertising	Build high-value lookalikes
+Build lookalikes for app install
+Increase signups with lookalikes
+Mitigate cart abandonment
+Mitigate high value churn
+Suppress based on time
+Suppress with purchase
+Personalize first conversion	Accelerate app install
+Accelerate onboarding
+Accelerate signup
+Acquire paid subscriptions
+Convert trials to paid subscriptions
+Mitigate cart abandonment
+Boost retention, upsell, and cross-sell	Build high value lookalikes
+Increase repeat purchases
+Mitigate high value churn
+Nurture with content
+Personalize upsell content
+Personalize winback
+Personalize communications and product experiences	Accelerate onboarding
+Increase repeat purchases
+Mitigate high value churn
+Nurture with content
+Personalize upsell content
+Personalize winback
+Suggested events, sources, and destinations
+This section contains tables for the different events, sources, and destinations that Segment recommends for each use case.
+Optimize advertising
+Click on each use case in this section to view Segment’s recommendations for the Optimize advertising business goal, which helps you improve return on ad spend.
+Build high value lookalikes
+Build lookalikes for app install
+Increase signups with lookalikes
+Mitigate cart abandonment
+Mitigate high value churn
+Suppress based on time
+Suppress with purchase
+Personalize first conversion
+Click on each use case in this section to view Segment’s recommendations for the Personalize first conversion business goal, which helps you convert prospective or free customers.
+Accelerate app install
+Accelerate onboarding
+Accelerate signup
+Acquire paid subscriptions
+Convert trials to paid subscriptions
+Mitigate cart abandonment
+Boost retention, upsell, and cross-sell
+Click on each use case in this section to view Segment’s recommendations for the Boost retention, upsell, and cross-sell business goal, which helps you increase repeat visits or purchases.
+Build high value lookalikes
+Increase repeat purchases
+Mitigate high value churn
+Nurture with content
+Personalize upsell content
+Personalize winback
+Personalize communications and product experiences
+Click on each use case in this section to view Segment’s recommendations for the Personalize communications and product experiences business goal, which helps you engage your customers with relevant content.
+Accelerate onboarding
+Increase repeat purchases
+Mitigate high value churn
+Nurture with content
+Personalize upsell content
+Personalize winback
+
+An introduction to Segment
+Welcome! This page is a high-level introduction to the Segment Platform, including what it does and how. (If you’re looking for detailed information about architecture, setup, or maintenance, you can skip ahead.)
+What is Segment?
+Segment is a Customer Data Platform (CDP), which means that it provide a service that simplifies collecting and using data from the users of your digital properties (websites, apps, etc). With Segment, you can collect, transform, send, and archive your first-party customer data. Segment simplifies the process of collecting data and hooking up new tools, allowing you to spend more time using your data, and less time trying to collect it.
+You can also enrich the customer data you collect by connecting data from your other tools, and then aggregate it to monitor performance, inform decision-making processes, and create uniquely customized user experiences. You can also use Unify, Segment’s identity resolution tool, to unify data from individual users to gain a wholistic understanding of their actions.
+Segment University: How Segment Works
+Check out how to get started with Segment in Segment University! (Must be logged in to access.)
+What does it do?
+In its very simplest form, Segment generates messages about what’s happening in your site or app, then translates the content of those messages into different formats for use by other tools (called ‘Destinations’), and transmits messages to those tools. The Segment servers also archive a copy of the data, and can send data to your storage systems (such as databases, warehouses, or bulk-storage buckets).
+How does Segment work?
+Segment’s libraries generate and send messages to the tracking API in JSON format. Segment provides a standard structure for the basic API calls, along with a recommended JSON structure (also known as the ‘Spec’, a type of schema) that helps keep the most important parts of your data consistent, while allowing great flexibility in what other information you collect and where.
+Segment Messages
+When you implement Segment, you add the Segment code to your website, app, or server, which generates messages based on specific triggers you define. At its very simplest, this code can be a snippet that you copy and paste into the HTML of a website to track page views. It can also be as complex as Segment calls embedded in a React mobile app to send messages when the app is opened or closed, when the user performs different actions, or when time based conditions are met (for example “ticket reservation expired” or “cart abandoned after 2 hours”).
+Segment has Sources and Destinations. Sources send messages into Segment (and other tools), while Destinations receive messages from Segment.
+Anatomy of a Segment message
+The most basic Segment message requires only a userID or anonymousID; all other fields are optional to allow for maximum flexibility. However, a normal Segment message has three main parts: the common fields, the “context” object, and the properties (if it’s an event) or traits (if it’s an object).
+The common fields include information specific to how the call was generated, like the timestamp and library name and version. The fields in the context object are usually generated by the library, and include information about the environment in which the call was generated: page path, user agent, OS, locale settings, etc. The properties and traits are optional and are where you customize the information you want to collect for your implementation.
+Another common part of a Segment message is the integrations object, which you can use to explicitly filter which destinations the call is forwarded to. However this object is optional, and is often omitted in favor of non-code based filtering options.
+Segment Sources
+Segment provides several types of Sources which you can use to collect your data, and which you can choose among based on the needs of your app or site. For websites, you can embed a library which loads on the page to create the Segment messages. If you have a mobile app, you can embed one of Segment’s Mobile libraries, and if you’d like to create messages directly on a server (if you have, for example a dedicated .NET server that processes payments), there are several server-based libraries that you can embed directly into your backend code. (You can also use cloud-sources to import data about your app or site from other tools like Zendesk or Salesforce, to enrich the data sent through Segment.)
+Destinations
+Once Segment generates the messages, it can send them directly to the Segment servers for translation and forwarding on to the Destinations you’re using, or it can make calls directly from the app or site to the APIs of your Destination tools. Which of these methods you choose depends on which Destinations you’re using and other factors. You can read more about these considerations in our Connection Modes documentation
+What happens next?
+Messages sent to the Segment servers using the tracking API can then be translated and forwarded on to Destination tools, inspected to make sure that they’re in the correct format or schema, inspected to make sure they don’t contain any Personally Identifying Information (PII), aggregated to illustrate overall performance or metrics, and archived for later analysis and reuse.
+What are the other parts of the Segment platform?
+In addition to Connections (our core message routing product) Segment offers additional features to help your organization do more with its data, and keep data clean, consistent, and respectful of end-user privacy. The following products are available:
+Privacy Portal - available to all users - Inspect incoming messages to identify PII, classify it by its riskiness, and decide how it’s handled and which tool may use it.
+Protocols - create a unified schema for all the data you collect, coordinate implementation to keep it consistent with that schema, and make sure your data always arrives in the right format and block and alert when it doesn’t.
+Engage - identify groups of users (“audiences”) based on behavior or other metrics calculated from your data, and send these groups to Destinations, identity resolution
+Where can I learn more?
+I’m a Segment Developer
+I’m a Segment Data user
+I’m a Segment Workspace administrator
+What’s a Workspace?
+A workspace is a group of sources that can be administered and billed together. Workspaces help companies manage access for multiple users and data sources. Workspaces let you collaborate with team members, add permissions, and share sources across your whole team using a shared billing account.
+When you first log in to your Segment account, you can create a new workspace, or choose to log into an existing workspace if your account is part of an existing organization.
+What’s a Source?
+In Segment, you create a source (or more than one!) for each website or app you want to track. We highly recommend creating a Source for each unique source of data (each site, app, or server), though this isn’t required.
+Sources belong to a workspace, and the URL for a source looks something like this: https://segment.com/<my-workspace>/sources/<my-source-name>/
+You can create new sources using the button in the workspace view. Each source you create has a write key, which is used to send data to that source. For example, to load analytics.js, the Segment JavaScript library on your page, the snippet on the Quickstart Guide includes:
+analytics.load("YOUR_WRITE_KEY");
+What’s a Destination?
+Destinations are business tools or apps that you can connect to the data flowing through Segment. Some of Segment’s most popular destinations are Google Analytics, Mixpanel, Kissmetrics, Customer.io, Intercom, and KeenIO.
+All of these tools run on the same data: who are your customers and what are they doing? But each tool requires that you send that data in a slightly different format, which means that you’d have to write code to track all of this information, again and again, for each tool, on each page of your app or website.
+Enter Segment. Do it once.
+Segment eliminates this process by introducing an abstraction layer. You send your data to Segment, and Segment understands how to translate it so we can send it along to any destination. You enable destinations from the catalog in the Segment App, and user data immediately starts flowing into those tools. No extra code required!
+Segment supports many categories of destinations, from advertising to marketing, email to customer support, CRM to user testing, and even data warehouses. You can view a complete list of available destinations or check out the destination page for a searchable list broken down by category.
+What’s a Warehouse?
+A warehouse is a central repository of data collected from one or more sources. This is what commonly comes to mind when you think about a relational database: structured data that fits neatly into rows and columns.
+In Segment, a Warehouse is a special type of destination. Instead of streaming data to the destination all the time, we load data to them in bulk at regular intervals. When we load data, we insert and update events and objects, and automatically adjust their schema to fit the data you’ve sent to Segment.
+
+Segment for Developers
+This guide explains all you need to know to get started with your Segment implementation, and directs you to more resources depending on your specific needs.
+If you haven’t already, you should read the detailed explanation of Segment on the previous page!
+Segment University: Segment in Action
+See a quick example of Segment working on an ecommerce website. (Must be logged in to access.)
+What does Segment do?
+Segment sends messages about activities in your mobile apps, websites or servers, receives those messages, and translates and forwards the message content to Destination tools. It also can send the contents of those messages to a bulk storage destination for archiving. In more complicated implementations, Segment can serve as a wrapper to trigger messages directly to other APIs, and can inspect, correct, classify and block the message contents.
+Types of Segment messages
+Segment’s libraries generate and send messages to our tracking API in JSON format, and provide a standard structure for the basic API calls. We also provide recommended JSON structure (also known as a schema, or ‘Spec’) that helps keep the most important parts of your data consistent, while allowing great flexibility in what other information you collect and where.
+There are six calls in the basic tracking API, which answer specific questions:
+Identify: Who is the user?
+Track: What are they doing?
+Page: What web page are they on?
+Screen: What app screen are they on?
+Group: What account or organization are they part of?
+Alias: What was their past identity?
+Among these calls, you can think of Identify, Group, and Alias as similar types of calls, all to do with updating our understanding of the user who is triggering Segment messages. You can think of these calls as adding information to, or updating an object record in a database. Objects are described using “traits”, which you can collect as part of your calls.
+The other three, Track, Page, and Screen, can be considered as increasingly specific types of events. Events can occur multiple times, but generate separate records which append to a list, instead of being updated over time.
+A Track call is the most basic type of call, and can represent any type of event. Page and Screen are similar and are triggered by a user viewing a page or screen, however Page calls can come from both web and mobile-web views, while Screen calls only occur on mobile devices. Because of the difference in platform, the context information collected is very different between the two types of calls.
+Tip! Segment recommends that you always use the Page and Screen calls when recording a page-view, rather than creating a “Page Viewed” event, because the Page/Screen calls automatically collect much better context information.
+Anatomy of a Segment message
+The most basic Segment message requires only a userID or anonymousID; all other fields are optional to allow for maximum flexibility. However, a normal Segment message has three main parts: the common fields, the “context” object, and the properties (if it’s an event) or traits (if it’s an object).
+The common fields include information specific to how the call was generated, like the timestamp and library name and version. The fields in the context object are usually generated by the library, and include information about the environment in which the call was generated: page path, user agent, OS, locale settings, etc. The properties and traits are optional and are where you customize the information you want to collect for your implementation.
+Another common part of a Segment message is the integrations object, which you can use to explicitly filter which destinations the call is forwarded to. However this object is optional, and is often omitted in favor of non-code based filtering options.
+Message schemas, Blocks, and Specs
+The Segment “Specs” provide recommended message schemas - the information we recommend that you collect - for each type of call. These are recommendations not requirements, but if you follow these schema guidelines the Segment servers can more easily identify parts of your messages, and translate them to downstream tools.
+In addition to the recommended message schemas, Segment also provides “blocks”: recommendations on what information to collect and how to format it, for different industries and use cases. These are recommendations only, but by collecting all of the information in these blocks, you can ensure that common tools used in that use-case have the information they need to function.
+A third section of the Spec is the “industry specs” which provide recommendations that include an explicit translation or mapping in the Segment servers, to best power the downstream Destinations commonly used in these industries.
+Sources and Destinations
+When you start out, you create a Workspace, which serves as a container for all of your Sources and Destinations.
+Segment has Sources and Destinations. Sources send data into Segment, while Destinations receive data from Segment.
+Segment has five types of sources: Web (Analytics.js), Mobile, Server, and Cloud App, plus a fifth type: User-created Source Functions. Web, Mobile, and Server sources send first-party data from your digital properties. Cloud-app sources send data about your users from your connected web apps, for example a ticketing system such as Zendesk, a payments system such as Stripe, or a marketing tool like Braze.
+Connection modes
+Segment has several types of sources, and many destinations can accept data from all of them. However, some are only compatible with specific source types (for example, web only, or server only). To find out which source types a specific destination can accept data from, check the documentation for that destination for a “Supported Sources and Connection Modes” section.
+Segment’s web source (Analytics.js), and native client-side libraries (iOS, Android, React-native) allow you to choose how you send data to Segment from your website or app. There are two ways to send data:
+Cloud-mode: The sources send data directly to the Segment servers, which then translate it for each connected downstream destination, and send it on. Translation is done on the Segment servers, keeping your page size, method count, and load time small.
+Healthcare and Life Sciences (HLS) customers can encrypt data flowing into their destinations
+HLS customers with a HIPAA eligible workspace can encrypt data in fields marked as Yellow in the Privacy Portal before they flow into an event stream, cloud-mode destination.
+To learn more about data encryption, see the HIPAA Eligible Segment documentation
+Device-mode: You include additional code on your website or mobile app which allows Segment to use the data you collect on the device to make calls directly to the destination tool’s API, without sending it to the Segment servers first. (You still send your data to the Segment servers, but this occurs asynchronously.) This is also called wrapping or bundling, and it might be required when the source has to be loaded on the page to work, or loaded directly on the device to function correctly. When you use Analytics.js, you can change the device-mode destinations that a specific source sends from within the Segment web app, without touching any code.
+If you use Server source libraries, they only send data directly to Segment in Cloud-mode. Server library implementations operate in the server backend, and can't load additional destination SDKs.
+To learn more about connection modes and when you should use each, see the details in the Destinations docs.
+Planning your Segment implementation
+The journey of a thousand miles begins, ideally, with a plan. Regardless of if you’re a new company just implementing analytics for the first time, or a multi–national corporation modernizing your analytics stack, it’s a great idea to start with a Tracking Plan. For new implementations, this can be as simple as a document where you write down these four things for each item you track:
+What am I tracking? (What is the event name or type?)
+Why am I tracking it? (What questions does this data answer?)
+For whom am I tracking it? (Who owns this question, tool, or business area?)
+Where (which destination tools) do I want to send this data to?
+If you’re a large or long-established organization and you’re replacing existing tools, you’ll want to spend more time on this to maintain analytic parity and continuity of tooling. We highly recommend reading up on tracking plans and schemas for Protocols, our tool for managing and sharing tracking plans and enforcing schemas.
+Regardless of your organization’s size or age, you’ll want to take an inventory of the destination tools you’ll be using with Segment, and make a list of the connection modes each one accepts. This makes it easier to check off when you’ve implemented each one, so you’re not missing anything.
+How do I test if it’s working?
+There are several ways to check if your data is flowing. One is the Debugger tab in each Source in the Segment web app, where you can see data coming from a source into Segment. Another is the Event Delivery tool which shows which data is arriving at specific destinations.
+For monitoring purposes, you’ll also see alerts in the Workspace Health tool if your sources or destinations produce repeated errors.
+How do I filter my data?
+There are several different ways to ensure that you can collect your data once, but filter it out of specific destinations. See Filtering Data for a list of the available methods and descriptions.
+Troubleshooting
+If you’re seeing errors thrown by your destinations, you might have an implementation issue. See the Integration Error Codes list or contact our Success engineering team for help.
+Have suggestions for things to add to this guide? Drop us a line.
+Segment Terraform Provider
+Segment has a Terraform provider, powered by the Public API, that you can use to manage Segment resources, automate cloud deployments, and change control. Take a look at the Segment provider documentation on Terraform to see what’s supported.
+
+Segment for Data Users
+If you aren’t involved in setting up your Segment implementation, or are just starting to set up Destinations for your organization’s workspace, this guide is for you.
+What is Segment?
+If you read the detailed explanation of Segment on the previous page, you can skip ahead!
+Segment is a system for sending messages from your websites, mobile apps, and servers. These messages contain data about events on, or users of those systems, and these messages can sent on to other tools, and gathered together in a warehouse for later analysis. Segment can also bring in information about your users from external systems, such as helpdesks or CRM systems, and collate that information to help you analyze your data, build audiences of users, and personalize your users’ experiences.
+Once you (or your organizations’ developers) have your Segment Sources set up and sending data, you can log in to the Segment App and set up Destinations, which are how Segment sends that data to other tools (like Google Analytics, Mixpanel, and many others).
+Environments and Labels
+Depending on your organization’s configuration and access settings, you might be able to see one or multiple Environments (for example, “Production”, “Testing”, “Development”), or one or multiple Labels, which control access to different parts of your organization’s Segment system. If you see several environments, contact your Segment administrator for more details so you can make sure you make your changes in the right place.
+Data inside Segment
+Data enters the Segment systems from Sources, but once data is in the system, your organization may have different tools configured to control and change it. This could change what data is available to you, or any destinations you set up.
+For example, Protocols makes sure that data coming into Segment follows specific formats and patterns, and might block and discard malformed or unwanted data. The Privacy tool can be configured to remove Personally Identifiable Information (PII) from the data. And several different methods are available to filter data so that it doesn’t send certain types of events, or reach specific destinations or warehouses.
+Set up a Destination
+Depending on the access level you have in your organization’s Segment workspace, you might be able to create new Destinations, or you might only be able to edit existing ones.
+To add a new Destination, you’ll usually need some information (such as a token or API key) from the destination tool to start. You’ll enter that into the Segment App so we can connect to and send data to that tool. You’ll also need to know which Source you’ll be sending data from.
+To set up a destination:
+Log in to the Segment App, and click Add Destination to go to the catalog of available destinations.
+Search for and select the destination you want to set up.
+On the description page that appears, click Configure.
+On the next page, select the source that you want the destination to get data from. You can only select one source at at time. The list displays only the sources that are compatible with the destination you chose. If you don’t see a source that you expect, contact your administrator.
+Click Confirm Source.
+On the next page, configure your destination by entering the API key, token, and any other information. The configuration page shows both required information, and any extra settings.
+Tip: Segment usually is able to translate data into a format that the destination expects, however some destinations (such as Adobe Analytics) may require manual mapping steps to configure properly. If you see additional fields for mapping configuration, read the documentation for that destination to learn more.
+Troubleshooting
+If you’re setting up a destination to use cloud-mode data (data that’s sent through Segment, rather than directly from a user’s device), you can use the Event Tester and Event Delivery tools to check that data is arriving, and being correctly delivered to the destination.
+
+Segment for Workspace Administrators
+If your job is to set up or maintain a Segment Workspace for your organization, or assist other people using the Segment Web App, this guide is for you. If you’re more interested in Segment implementation details, see the developer intro guide.
+What is Segment?
+If you’ve already read an Introduction to Segment, you can skip ahead.
+Segment is a system for sending messages from your websites, mobile apps, and servers. These messages contain event and user data that you can send to other tools or collect in warehouses for further analysis. Segment also gathers information about your users from external systems, like help desk software or CRMs. You can use this collated information to analyze data, build user audiences, and personalize your users’ experiences.
+What’s a Workspace?
+A workspace is a group of sources that can be administered and billed together. Workspaces help companies manage access for multiple users and data sources. Workspaces let you collaborate with team members, add permissions, and share sources across your whole team using a shared billing account.
+When you first log in to your Segment account, you can create a new workspace, or choose to log into an existing workspace if your account is part of an existing organization.
+The Workspace Administrator’s Role
+You don’t have to be a developer to be a Workspace administrator for an organization, and this guide only covers tasks specifically related to managing a Workspace in the Segment App.
+However, many Workspace admins are also involved in the Segment implementation process as there are usually some tasks that must be performed in the Workspace to complete an implementation. If you think you might develop a Segment implementation or help out other developers, first read Segment for developers.
+Note: Workspace roles are only available to Business Tier customers. If you’re on a Free or Team plan, all workspace members are granted workspace administrator access.
+In addition, Workspace administrators set up and maintain the organization’s workspace settings, which include:
+Billing information and billing contacts
+Incident contacts - the people who get notified in the event of an outage or incident
+The Workspace name and slug - the display name and namespace of the workspace in the Segment system
+Changing a workspace name and slug won’t impact configured sources or destinations, which connect using an internal ID and writeKey.
+Workspace administrators might also maintain:
+The organization’s authentication settings. This can include login settings, multi-factor authentication enforcement, Identity provider (IDP) settings (including SAML and OAuth), and other related settings.
+Access Management settings. Business-tier plans include object-, group-, and role-based access management settings, Segment workspace “environments” and labels, roles and groups, and the general permissions model.
+Billing information. If your Workspace is on a Team plan, you might have access to a billing page, where you can update the credit card on file or change other billing details.
+Tasks in Connections
+As an administrator, you might be asked to help other members of your organization with tasks related to setting up and troubleshooting your Segment implementation.
+Setting up destinations
+Destinations are the endpoints to which Segment sends data flowing from your Sources. Destinations can be third-party external tools, like Google Analytics or Mixpanel, or bulk-storage resources, like warehouses.
+You can set up a Destination from within the Segment App by navigating to the Destination Catalog and selecting the tool you want to set up. In most cases, you’ll need an existing API key or token so that Segment can send the data to the correct account. If you’re setting up a Warehouse or other storage destination, more steps might be required; see the Warehouses documentation for more details.
+Troubleshooting
+Use these Segment features to keep tabs on your Workspace:
+Workspace Health - if there are any problems with sources or destinations in your workspace, they’ll show up here.
+Event Tester - The Event tester allows you to troubleshoot your Sources, their configuration, and their downstream destinations. The Event Tester shows a sample of the data available, so you can check that it’s being sent, and that it’s in the correct format.
+Event Delivery - Event Delivery is a bit like the Event Tester, but specifically for determining if rules or filters within Segment are preventing data from getting to a destination.
+Check out Segment’s list of integration error codes for insight into what might cause an error.
+
+Filtering your Segment Data
+There are many ways you can use Segment to filter event and object based data to control which destinations it reaches. This document lists the most commonly used ways you can filter data in Segment, and explains when you’d use each.
+Use Segment to filter event and object based data
+Filtering with the Integrations Object
+The Integrations object is the only filtering method that cannot be edited using the Segment web app. As such, it is both the most reliable, and the most complicated filtering option to change. The integrations object is available to all customers regardless of Segment plan.
+Use this option when you absolutely, for sure, 100% know that you always, or never want this data in a specific destination or set of destinations. You can also build logic in your app or site to conditionally enable or disable destinations by rewriting this object, however this is not recommended as it is time consuming to change, especially for mobile apps.
+The Integrations object filters track, page, group, identify, and screen events from both client and cloud based sources, and routes or prevents them from getting to the listed destinations.
+You can use the integrations JSON object as part of your Segment payloads to control how Segment routes your data to specific destinations. An example payload is below:
+{
+  "anonymousId": "507f191e810c19729de860ea",
+  "context": {
+    "locale": "en-US",
+    "page": {
+      "title": "Analytics Academy",
+      "url": "https://segment.com/academy/"
+    }
+  },
+  "integrations": {
+    "All": true,
+    "Mixpanel": false,
+    "Salesforce": false,
+    "My Destination Function (My Workspace)": true
+  }
+}
+By default, the integrations object is set to 'All': true. You do not need to include this flag in the object to use this behavior, but if you’ll be using the integrations object frequently to control destination filtering, you might want to do this to make it explicit for later readers. Change this to 'All': false to prevent any downstream destinations from receiving data, not including data warehouses. If you set 'Segment.io': false in the integrations object, Analytics.js 2.0 drops the event before it reaches your Source Debugger. You can also add destinations to the object by key, and provide a true or false value to allow or disallow data to flow to them on an individual basis. The Destination Info box at the top of each destination page lets you know how to refer to each destination in the Integrations object.
+If you are using multiple instances of a destination, any settings you set in the integrations object are applied to all instances of the destination. You cannot specify an instance of a destination to apply Integrations object settings to.
+Note that destination flags are case sensitive and match the destination’s name in the docs (for example, “AdLearn Open Platform”, “awe.sm”, or “MailChimp”).
+The syntax to filter data to a data warehouse is different. Refer to the Warehouse FAQs for more details.
+Destination filters
+Destination filters allow you to control the data flowing into each specific destination, by examining event payloads, and conditionally preventing data from being sent to destinations. You can filter out entire events, or just specific fields in the properties, in the traits, or in the context of your events. Destination filters support cloud-based (server-side), actions-based, and mobile and web device-mode destinations. Destination filters aren’t available for, and don’t prevent data from reaching your warehouse(s) or S3 destinations.
+Destination filters are only available in workspaces that are on a Business Tier plan.
+Keep these limitations in mind when using destination filters.
+Configuring a destination filter
+To set up destination filters from the Segment web app for the destination from which you want to exclude data:
+(For web device-mode destinations only) Enable device mode destination filters for your Analytics.js source. To do this, go to your Javascript source and navigate to Settings > Analytics.js and turn the toggle on for Destination Filters.
+NOTE: Destination filters for web device-mode only supports the Analytics.js 2.0 source.
+Navigate to Connections > Destinations and select the destination you want to set up filters for.
+Go to the Filters tab and click + New Filter to create a destination filter. See the Destination Filters documentation for more details.
+You can set up destination filters using the options presented in the Segment web app, or using Segment’s Filter Query Logic (FQL). If you use FQL, your query syntax is limited to 5KB per query.
+Per-Source schema integrations filters
+Integration filters allow you to quickly change which destinations receive specific Track, Identify, or Group events. Access this tool in any Source that is receiving data by navigating to the Schema tab. Schema integration filters are available to workspaces that are on a Business Tier plan only.
+You can apply Integrations filters to specific events regardless of whether the source is connected to a Tracking Plan. To update which destination an event can be sent to, click the Integrations dropdown menu to see a list of the destinations each call is sent to. You can turn those destinations on or off from within the dropdown menu.
+The Integrations dropdown menu displays a list of destinations each call is sent to
+The events filtered out of individual destinations using this method still arrive in your data warehouse(s). Warehouses do not appear in the integration filters dropdown, and you cannot prevent data from flowing to Warehouses using this feature - to do that use Warehouse Selective Sync.
+Integration filters are all-or-nothing for each event. If you require more detailed control over which events are sent to specific destinations, you can use Destination Filters to inspect the event payload, and conditionally drop the data or forward it to the destination.
+Integration filters won’t override an existing value in the integrations object. If the integration object already has a value for the integration, the per source schema integration filters will not override this. For example, if you’re sending events to Appsflyer with the appsflyerId passed into the integration object:
+integrations: {
+  Appsflyer: {
+    appsflyerId: 'xxxxxx'
+  }
+}
+For the same event you have Appsflyer turned off using the per source schema integrations filter, this filter won’t override the above object with a false value, and events still send downstream. In this scenario, you can use destination filters to drop the event before it sends downstream.
+Schema event filters
+You can use Schema Event Filters to discard and permanently remove Page, Screen and Track events from event-based sources, preventing them from reaching any destinations or warehouses, as well as omit identify traits and group properties. Use this if you know that you’ll never want to access this data again. This functionality is similar to filtering with the Integrations object, however it can be changed from within the Segment app without touching any code.
+When you enable these filters, Segment stops forwarding the data to all of your Cloud- and device-mode destinations, including warehouses, and your data is no longer stored in Segment’s warehouses for later replay.
+Use this when you need to disable an event immediately, but may need more time to remove it from your code, or when you want to temporarily disable an event for testing. In addition to blocking track calls, you can block all page and screen calls, as well as omit identify traits and group properties.
+If the Source is not connected to a tracking plan, you’ll find event filter toggles next to the Integration filters in the source’s schema tab. When an event is set to block, the entire event is blocked. This means no destinations receive it, including data warehouses.
+When you block an event using Schema filters, it won’t be considered in the MTU count unless blocked event forwarding is enabled.
+Event filter toggles
+When an event is blocked, the name of the event or property appears on your Schema page with a counter which shows how many times it has been blocked. By default, data from blocked events and properties is not recoverable. You can always re-enable the event to continue sending it to downstream destinations.
+In most cases, blocking an event immediately stops that event from sending to destinations. In rare cases, it can take up to 6 hours for an event to completely stop arriving in all Destinations.
+This feature is only available if the Source is not connected to a Tracking Plan, and is only available in workspaces that are on a Business Tier plan.
+Protocols Tracking Plan blocking and property omission
+If you’re using Protocols, and you’re confident that your tracking plan includes exactly the events and properties you want to record, you can tell Segment to block unplanned events or malformed JSON. When you do this, Segment discards any data coming from the Source that doesn’t conform to the tracking plan.
+By default, the blocked events are permanently discarded: they do not flow to Destinations, and cannot be Replayed (similar to Schema Controls). However, you can opt to send data in violation of the tracking plan to a new Segment Source so you can monitor it. (This source can affect your MTU count.)
+If you have Protocols in your workspace, and have a tracking plan associated with the Source, you’ll see additional options in the Schema Configuration section of the Source’s Settings page. From this page you can choose how to handle data violations across different types of calls and properties, whether that be blocking events entirely or omitting violating properties.
+Schema Configuration section of a source's Settings page
+Destination Insert Function
+A customizable way to filter or alter data going from a source to a cloud-mode destination is to use Insert Functions). This feature gives you the ability to receive data from your Segment source, write custom code to alter or block it, and then pass that altered payload to a downstream cloud-mode destination.
+Warehouse Selective Sync
+Warehouse Selective Sync allows you to stop sending specific data to specific warehouses. You can use this to stop syncing specific events or properties that aren’t relevant, and could be slowing down your warehouse syncs. See the Warehouse Selective Sync documentation to learn more.
+This feature is only available to Business Tier customers, and you must be a Workspace Owner to change Selective Sync settings.
+Privacy Portal filtering
+The Privacy Portal is available to all Segment customers, because Segment believes that data privacy is a right, and that anyone collecting data should have tools to help ensure their users’ privacy. More enhancements are available to BT customers who may need tools for managing complex implementations.
+The Privacy Portal tools allow you to inspect your incoming calls and their payloads, detect potential Personally Identifiable Information (PII) in properties using matchers, classify the information by different categories of risk, and use those categories to determine which Destinations may or may not receive the data. Learn more about these features in the Privacy Portal documentation.
+
+Handling Duplicate Data
+Segment guarantees that 99% of your data won’t have duplicates within an approximately 24 hour look-back window. Warehouses and Data Lakes also have their own secondary deduplication process to ensure you store clean data.
+99% deduplication
+Segment has a special deduplication service that sits behind the api.segment.com endpoint and attempts to drop 99% of duplicate data. Segment stores at least 24 hours’ worth of event messageIds, which allows Segment to deduplicate any data that appears with the same messageId within the stored values.
+Segment deduplicates on the event’s messageId, not on the contents of the event payload. Segment doesn’t have a built-in way to deduplicate data for events that don’t generate messageIds. The message de-duplication is not scoped to a specific source or a workspace, and applies to all events being received by Segment.
+Keep in mind that Segment’s libraries all generate messageIds for each event payload, with the exception of the Segment HTTP API, which assigns each event a unique messageId when the message is ingested. You can override these default generated IDs and manually assign a messageId if necessary. The messageId field is limited to 100 characters.
+Warehouse deduplication
+Duplicate events that are more than 24 hours apart from one another deduplicate in the Warehouse. Segment deduplicates messages going into a Warehouse (including Profiles Sync data) based on the messageId, which is the id column in a Segment Warehouse.
+Data Lake deduplication
+To ensure clean data in your Data Lake, Segment removes duplicate events at the time your Data Lake ingests data. The Data Lake deduplication process dedupes the data the Data Lake syncs within the last 7 days with Segment deduping the data based on the messageId.
+
+Internet Bots
+What’s a bot?
+If you stumbled onto this page by accident and don’t know what a bot is or are just curious to learn more, the following Wikipedia article provides an awesome summary: https://en.wikipedia.org/wiki/Internet_bot.
+Surprisingly, more than half of all web traffic is made up of bots. While a fraction of them are good bots with a regulated pattern, and therefore beneficial to all online businesses, the majority of them have malicious intents and are mostly unregulated.
+Is it possible to ignore bad bots?
+Segment doesn’t offer an out-of-the-box solution to filter or ignore bot traffic.
+As such, you generally have two options:
+Handle the filtering at a destination-level: Some of Segment’s destination partners, like Mixpanel, filter bots automatically. Whereas others such as Hubspot allow you to set up bot filtering manually. The advantage of filtering bots at a destination level is that it allows you to implement a robust, easy-to-maintain solution. However, as it pertains to Segment, the downside is that bot traffic will still make it to Segment, affecting your MTU count.
+Write custom logic that suppresses bot activity from being sent to Segment: if you want to prevent bot traffic from making it to Segment in the first place, another option is to write your own custom code. The logic, in pseudo-code, would look something like this if you know a particular characteristic of the bot traffic to filter out, such as the userAgent:
+var robots = [useragent1, useragent2]
+if ! window.navigator.userAgent in robots
+  // send analytics calls
+  analytics.track
+The benefit here is that you would be able to limit the impact that bots have on your MTU count. On the flip side, it’s much harder to implement and maintain a custom filter.
+If I see a massive MTU spike because of bots, can I apply for a refund?
+As a matter of policy, Segment doesn’t provide refunds for bot-related MTU spikes, as bot traffic is out of Segment’s control. However for extenuating circumstances, you can petition for a refund, assuming you’re able to provide proof of the bot’s effect.
+I’m seeing a lot of browser traffic from Boardman; is that from Segment or a bot?
+Segment uses Amazon’s hosting services, which are based in Boardman, Oregon. However many bots also originate from AWS in Boardman as well.
+One way you can confirm whether or not traffic is coming from Segment vs. a bot is to check the userAgent of the inbound call. Segment’s is:
+'Mozilla/5.0 (' + deviceModel.slice(0, -3) + '; CPU ' + osName + ' ' +
+osVersion.replace(/\./g, '_') + ' like Mac OS X) AppleWebKit/600.1.4 (KHTML,
+like Gecko) Version/' + osVersion.charAt(0) + '.0 Mobile/10B329 Safari/8536.25'
+
+Segment vs. Tag Managers
+Tag managers, also known as Tag Management Systems (TMS), were a popular solution before the mainstream adoption of mobile apps. They primarily helped Digital Analytics and Online Marketers manage web tags or “beacons” on a website.
+Built on an older technology, tag managers inject either a piece of JavaScript or an ad pixel into a website. They carry out rules that marketers create for each tag, like firing an ad channel pixel when that network refers a website visitor. Every tag requires users to create rules. No data is stored, and no code is eliminated.
+In addition to ad networks, today’s data-driven businesses use a variety of tools to optimize their product and marketing spends. In order to a/b test copy, nurture sales leads, email customers, and provide fast support, businesses integrate variety of analytics and marketing tools. Segment makes it easy to install, try, and use them all. Tag managers primarily focus on ad networks, and can’t support modern tools without extensive customization.
+Rather than “firing and forgetting,” Segment takes a data-centric, deliberate approach to destinations. You don’t need to set up special parameters for each tool – Segment does that for you. Segment structures your data so we can understand what it is, and can translate it correctly for each destination we send it to. Segment works because all of these tools operate on the same customer data: who is on your app and what are they doing. Segment collects this data once, then translates and sends it to every tool you use. Because Segment also archives the data, Segment can replay your historical data into new tools, and send your raw data to a data storage solution for later analysis.
+Segment	Tag Managers
+Core Competency	Integrates complex tools with minimal effort, stores a complete copy of clickstream data, exports data to SQL databases	Loads JavaScript into webpages, inserts advertising pixels based on rule settings
+Data Storage	Stores clickstream data in one comprehensive set; replays historical data into new tools; exports data into SQL databases and internal systems	Does not store data; cannot load historical data into new tools; cannot translate and load historical data into SQL databases
+Device Compatibility	Tracks user events in mobile, web, and server environments. Server libraries include Python, Node, Ruby, PHP, .NET, Java, Clojure, Go, Rust and Xamarin	Operates on web; limited functionality on mobile; does not support server destinations
+User Interface	Delivers sleek user experience; automatically translate data for new tools when you enable a destination	Requires that you configure settings and rules for each pixel to fire
+Tool Integrations	Fully integrates analytics, advertising, email, customer support, marketing automation, usability tracking, error testing, and CRM tools with the flick of a switch	Manages ad pixels; requires custom engineering work to integrate any other complex tool
+Every organization’s data stack and business requirements are unique. Segment also works well in tandem with a tag manager. For example, Segment sends data directly to the Google Tag Manager (GTM) destination.
+While you can use Segment’s Analytics.js library through a tag manager, Segment doesn’t recommended this for a few reasons:
+A hybrid approach makes it difficult to determine the root cause of technical problems, and complicates troubleshooting. Segment cannot guarantee destination compatibility in a “hybrid” Segment-tag-manager installation, and cannot guarantee support on these installations. All QA and regression testing assumes a native installation of Analytics.js on the page.
+One of Segment’s main charters is to not lose data. Our system and cloud infrastructure is designed to ensure that data loss does not happen. If you implement the entry point of data capture (Segment’s libraries) using a Tag Manager, you introduce risk of data loss and make it difficult or impossible to troubleshoot.
+This implementation behind a tag manager can introduce major delays and performance issues, which can cause delays with events that need to occur early in your funnel.
+The biggest challenge is around triggering cascading events. Browsers are notorious for dropping calls. When you use a TMS to initiate Segment events you are introducing a second point of failure for those events.
+
