@@ -47,13 +47,13 @@ This project is a Flask-based chatbot application that utilizes LangChain, Googl
    pip install -r requirements.txt
    ```
 
-4. Start the Flask server:
+4. Start the Flask server in the first terminal:
 
    ```bash
    python run.py
    ```
 
-5. Navigate to the React frontend directory and start the development server:
+5. Navigate to the React frontend directory and start the development server in the second terminal:
 
    ```bash
    cd frontend
@@ -78,18 +78,6 @@ This project is a Flask-based chatbot application that utilizes LangChain, Googl
     "response": "Generated answer here"
   }
   ```
-
-## Folder Structure
-
-```
-project-root/
-|-- data/                    # Directory for input text files
-|-- venv/                    # Python virtual environment (ignored in .gitignore)
-|-- run.py                   # Main Flask application
-|-- requirements.txt         # Project dependencies
-|-- .gitignore               # Git ignore file
-|-- frontend/                # React frontend source code
-```
 
 ## Usage
 
