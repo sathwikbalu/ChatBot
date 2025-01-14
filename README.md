@@ -36,6 +36,7 @@ This project is a Flask-based chatbot application that utilizes LangChain, Googl
 2. Create and activate a virtual environment:
 
    ```bash
+   cd python
    python -m venv venv
    source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
@@ -49,7 +50,6 @@ This project is a Flask-based chatbot application that utilizes LangChain, Googl
 4. Start the Flask server:
 
    ```bash
-   cd python
    python run.py
    ```
 
