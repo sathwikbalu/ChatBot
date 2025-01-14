@@ -1,4 +1,4 @@
-# Project: Flask Chatbot with LangChain and Google Generative AI
+# Project: Building a Support Agent Chatbot for CDP
 
 ## Description
 
